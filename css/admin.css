@@ -1,0 +1,10 @@
+/*
+	Admin styles for Exifography options page
+	
+	Author: kristarella
+	Author URL: http://www.kristarella.com
+*/
+
+.exifography table.exif_fields tr {width:200px; float:left;}
+.exifography label {display:block; text-align:right;}
+.exifography th {text-align:right;}

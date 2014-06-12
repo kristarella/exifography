@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Exifography 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-26 09:40+1000\n"
+"PO-Revision-Date: 2014-01-02 22:23+0400\n"
+"Last-Translator: Gregory A. Pozhvanov <gregory@pozhvanov.com>\n"
+"Language-Team:  <kristarella@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;gettext;gettext_noop;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.6.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru_RU\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../exifography.php:38
+msgid "Aperture"
+msgstr "Апертура"
+
+#: ../exifography.php:39
+msgid "Credit"
+msgstr "Автор"
+
+#: ../exifography.php:40
+msgid "Camera"
+msgstr "Камера"
+
+#: ../exifography.php:41
+msgid "Caption"
+msgstr "Подпись"
+
+#: ../exifography.php:42
+msgid "Taken"
+msgstr "Дата съёмки"
+
+#: ../exifography.php:43
+msgid "Copyright"
+msgstr "Авторские права"
+
+#: ../exifography.php:44
+msgid "Exposure bias"
+msgstr "Вилка экспозиции"
+
+#: ../exifography.php:45
+msgid "Flash fired"
+msgstr "Вспышка"
+
+#: ../exifography.php:46
+msgid "Focal length"
+msgstr "Фокусное расстояние"
+
+#: ../exifography.php:47
+msgid "ISO"
+msgstr "ISO"
+
+#: ../exifography.php:49
+msgid "Location"
+msgstr "Место съёмки"
+
+#: ../exifography.php:50
+msgid "Shutter speed"
+msgstr "Выдержка"
+
+#: ../exifography.php:51
+msgid "Title"
+msgstr "Заголовок"
+
+#: ../exifography.php:54
+msgid "Before EXIF block"
+msgstr "До блока EXIF"
+
+#: ../exifography.php:55
+msgid "Before EXIF item"
+msgstr "До элемента EXIF"
+
+#: ../exifography.php:56
+msgid "After EXIF item"
+msgstr "После элемента EXIF"
+
+#: ../exifography.php:57
+msgid "After EXIF block"
+msgstr "После блока EXIF"
+
+#: ../exifography.php:58
+msgid "Separator for EXIF label"
+msgstr "Разделитель для отметок EXIF"
+
+#: ../exifography.php:141
+msgid "Settings"
+msgstr "Установки"
+
+#: ../exifography.php:205
+msgid "yes"
+msgstr "да"
+
+#: ../exifography.php:207
+msgid "no"
+msgstr "нет"
+
+#: ../exifography.php:300
+msgid "mm"
+msgstr "мм"
+
+#: ../exifography.php:392
+msgid "Exifography Options"
+msgstr "Настройки Exifography"
+
+#: ../exifography.php:393
+msgid ""
+"For instructions and support please visit the <a target=\"_blank\" href="
+"\"http://www.kristarella.com/exifography\">Exifography plugin page</a>."
+msgstr ""
+"За подробными инструкциями и помощью обратитесь к <a target=\"_blank\" href="
+"\"http://www.kristarella.com/exifography\">странице плагина Exifography</a> "
+"(англ.)"
+
+#: ../exifography.php:407
+msgid "Default EXIF"
+msgstr "Элементы EXIF по умолчанию"
+
+#: ../exifography.php:408
+msgid "Auto insert into post"
+msgstr "Автоматически вставлять EXIF в записи"
+
+#: ../exifography.php:409
+msgid "Custom HTML"
+msgstr "Настройки HTML"
+
+#: ../exifography.php:415
+msgid "Automatically display exif"
+msgstr "Показывать EXIF автоматически"
+
+#: ../exifography.php:420
+msgid "Timestamp format"
+msgstr "Формат даты и времени"
+
+#: ../exifography.php:421
+msgid "Turn off item label"
+msgstr "Отключить подписи элементов EXIF"
+
+#: ../exifography.php:422
+msgid "Link GEO EXIF to Google Maps"
+msgstr "Связать GEO EXIF с картой Google"
+
+#: ../exifography.php:423
+msgid "Display map thumbnail instead of location coords"
+msgstr "Показать превью карты вместо координат места съёмки"
+
+#: ../exifography.php:424
+msgid "Map zoom (0 is the widest, 21 is close)"
+msgstr "Масштаб карты (0 – самый общий, 21 – самый детальный)"
+
+#: ../exifography.php:425
+msgid "Map width"
+msgstr "Ширина карты"
+
+#: ../exifography.php:426
+msgid "Map height"
+msgstr "Высота карты"
+
+#: ../exifography.php:435
+msgid ""
+"Set these to create default display options. In the absence of any other "
+"settings, these will be used when EXIF is displayed. You can override these "
+"within an individual post, shortcode, or function."
+msgstr ""
+"Здесь можно установить настройки по умолчанию. При отсутствии других "
+"настроек, именно эти элементы будут показаны в EXIF. Эти настройки можно "
+"поменять в отдельной записи, коротком коде или функции."
+
+#: ../exifography.php:440
+msgid ""
+"Use this option to automatically insert the EXIF for the first image "
+"attached to your post. Only use this when most of your posts will need EXIF, "
+"you can override this by deselecting all the post display options when "
+"editing a single post."
+msgstr ""
+"Используйте эту настройку, чтобы автоматически вставлять в запись информацию "
+"EXIF для первого изображения в записи. <br/>Используйте эту настройку, "
+"только если в большинстве записей нужно показывать EXIF. Эту настройку можно "
+"изменить, сняв выделение определённых настроек отдельной записи при её "
+"редактировании."
+
+#: ../exifography.php:445
+msgid ""
+"This is the HTML used to display your exif data. IDs and classes can be used "
+"for styling."
+msgstr ""
+"Код HTML, размещённый здесь, используется для отображения данных EXIF. Можно "
+"использовать ID и классы CSS."
+
+#: ../exifography.php:521
+msgid "Add EXIF to post"
+msgstr "Добавить EXIF к записи"
+
+#: ../exifography.php:541
+msgid ""
+"If there is a photo attached to this post, the following details may be "
+"added to the end of the post."
+msgstr ""
+"Если к записи приложена фотография, следующие данные можно добавить в конец "
+"записи:"

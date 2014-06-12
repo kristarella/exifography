@@ -1,0 +1,209 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Exifography 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-26 09:40+1000\n"
+"PO-Revision-Date: 2013-11-26 09:40+1000\n"
+"Last-Translator: Kristen Symonds <kristarella@gmail.com>\n"
+"Language-Team:  <kristarella@gmail.com>\n"
+"Language: en_AU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../exifography.php:38
+msgid "Aperture"
+msgstr "Apertura"
+
+#: ../exifography.php:39
+msgid "Credit"
+msgstr "Autor"
+
+#: ../exifography.php:40
+msgid "Camera"
+msgstr "Cámara"
+
+#: ../exifography.php:41
+msgid "Caption"
+msgstr "Modelo"
+
+#: ../exifography.php:42
+msgid "Taken"
+msgstr "Fecha"
+
+#: ../exifography.php:43
+msgid "Copyright"
+msgstr "Copyright"
+
+#: ../exifography.php:44
+msgid "Exposure bias"
+msgstr "Rango de exposición"
+
+#: ../exifography.php:45
+msgid "Flash fired"
+msgstr "Flash disparado"
+
+#: ../exifography.php:46
+msgid "Focal length"
+msgstr "Longitud focal"
+
+#: ../exifography.php:47
+msgid "ISO"
+msgstr "ISO"
+
+#: ../exifography.php:49
+msgid "Location"
+msgstr "Localización"
+
+#: ../exifography.php:50
+msgid "Shutter speed"
+msgstr "Velocidad"
+
+#: ../exifography.php:51
+msgid "Title"
+msgstr "Titulo"
+
+#: ../exifography.php:54
+msgid "Before EXIF block"
+msgstr "Antes del bloque EXIF"
+
+#: ../exifography.php:55
+msgid "Before EXIF item"
+msgstr "Antes del dato EXIF"
+
+#: ../exifography.php:56
+msgid "After EXIF item"
+msgstr "Despues del dato EXIF"
+
+#: ../exifography.php:57
+msgid "After EXIF block"
+msgstr "Despues del bloque EXIF"
+
+#: ../exifography.php:58
+msgid "Separator for EXIF label"
+msgstr "Separador para la etiqueta EXIF"
+
+#: ../exifography.php:141
+msgid "Settings"
+msgstr "Ajustes"
+
+#: ../exifography.php:205
+msgid "yes"
+msgstr "Si"
+
+#: ../exifography.php:207
+msgid "no"
+msgstr "no"
+
+#: ../exifography.php:300
+msgid "mm"
+msgstr ""
+
+#: ../exifography.php:392
+msgid "Exifography Options"
+msgstr "Opciones de Exifography"
+
+#: ../exifography.php:393
+msgid ""
+"For instructions and support please visit the <a target=\"_blank\" href="
+"\"http://www.kristarella.com/exifography\">Exifography plugin page</a>."
+msgstr ""
+"Para más instrucciones y soporte por favor visita la <a target=\"_blank\" "
+"href=\"http://www.kristarella.com/exifography\">pagina del plugin "
+"Exifography</a>."
+
+#: ../exifography.php:407
+msgid "Default EXIF"
+msgstr "Datos EXIF que por defecto se mostraran"
+
+#: ../exifography.php:408
+msgid "Auto insert into post"
+msgstr "Autoinsertar en el post"
+
+#: ../exifography.php:409
+msgid "Custom HTML"
+msgstr "El HTML que puedes personalizar"
+
+#: ../exifography.php:415
+msgid "Automatically display exif"
+msgstr "Enseñar automaticamente la informacion EXIF"
+
+#: ../exifography.php:420
+msgid "Timestamp format"
+msgstr "Formato de la fecha"
+
+#: ../exifography.php:421
+msgid "Turn off item label"
+msgstr ""
+
+#: ../exifography.php:422
+msgid "Link GEO EXIF to Google Maps"
+msgstr "Link a Google Maps para localización geográfica"
+
+#: ../exifography.php:423
+msgid "Display map thumbnail instead of location coords"
+msgstr "Mostrar el thumb del mapa en vez de las coordenadas de localización"
+
+#: ../exifography.php:424
+msgid "Map zoom (0 is the widest, 21 is close)"
+msgstr "Zoom del mapa (0 es lo más ancho, 21 lo más pequeño)"
+
+#: ../exifography.php:425
+msgid "Map width"
+msgstr "Anchura del mapa"
+
+#: ../exifography.php:426
+msgid "Map height"
+msgstr "Altura del mapa"
+
+#: ../exifography.php:435
+msgid ""
+"Set these to create default display options. In the absence of any other "
+"settings, these will be used when EXIF is displayed. You can override these "
+"within an individual post, shortcode, or function."
+msgstr ""
+"Seleccione los datos EXIF que desee que se enseñe por defecto en el post. En "
+"ausencia de cualquier otro valor, estos se usaran cuando se muestren los "
+"datos EXIF. Puede reemplazalos dentro de un post usando el shortcode o una "
+"función."
+
+#: ../exifography.php:440
+msgid ""
+"Use this option to automatically insert the EXIF for the first image "
+"attached to your post. Only use this when most of your posts will need EXIF, "
+"you can override this by deselecting all the post display options when "
+"editing a single post."
+msgstr ""
+"Utilice esta opción para insertar automáticamente la información EXIF de la "
+"primera imagen adjunta a su post. Utilice esta opción solo cuando la mayoría "
+"de los posts tengan fotografias con datos EXIF, usted puede anular esto des-"
+"seleccionando de todas las opciones de visualización cuando edite un post a "
+"solas."
+
+#: ../exifography.php:445
+msgid ""
+"This is the HTML used to display your exif data. IDs and classes can be used "
+"for styling."
+msgstr ""
+"Este es el codigo HTML que se utiliza para mostrar los datos EXIF. ID´s y "
+"las clases que pueden ser utilizados para fomatear/diseñar."
+
+#: ../exifography.php:521
+msgid "Add EXIF to post"
+msgstr "Añadir los datos EXIF al post"
+
+#: ../exifography.php:541
+msgid ""
+"If there is a photo attached to this post, the following details may be "
+"added to the end of the post."
+msgstr ""
+"Si hay alguna fotografía añadida al post, los siguientes detalles se "
+"mostraran al final del post."
+
+#~ msgid "Creation time"
+#~ msgstr "Fecha"

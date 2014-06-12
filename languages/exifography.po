@@ -1,0 +1,190 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Exifography 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-26 09:40+1000\n"
+"PO-Revision-Date: 2013-11-26 09:40+1000\n"
+"Last-Translator: Kristen Symonds <kristarella@gmail.com>\n"
+"Language-Team:  <kristarella@gmail.com>\n"
+"Language: en_AU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;gettext;gettext_noop;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../exifography.php:38
+msgid "Aperture"
+msgstr ""
+
+#: ../exifography.php:39
+msgid "Credit"
+msgstr ""
+
+#: ../exifography.php:40
+msgid "Camera"
+msgstr ""
+
+#: ../exifography.php:41
+msgid "Caption"
+msgstr ""
+
+#: ../exifography.php:42
+msgid "Taken"
+msgstr ""
+
+#: ../exifography.php:43
+msgid "Copyright"
+msgstr ""
+
+#: ../exifography.php:44
+msgid "Exposure bias"
+msgstr ""
+
+#: ../exifography.php:45
+msgid "Flash fired"
+msgstr ""
+
+#: ../exifography.php:46
+msgid "Focal length"
+msgstr ""
+
+#: ../exifography.php:47
+msgid "ISO"
+msgstr ""
+
+#: ../exifography.php:49
+msgid "Location"
+msgstr ""
+
+#: ../exifography.php:50
+msgid "Shutter speed"
+msgstr ""
+
+#: ../exifography.php:51
+msgid "Title"
+msgstr ""
+
+#: ../exifography.php:54
+msgid "Before EXIF block"
+msgstr ""
+
+#: ../exifography.php:55
+msgid "Before EXIF item"
+msgstr ""
+
+#: ../exifography.php:56
+msgid "After EXIF item"
+msgstr ""
+
+#: ../exifography.php:57
+msgid "After EXIF block"
+msgstr ""
+
+#: ../exifography.php:58
+msgid "Separator for EXIF label"
+msgstr ""
+
+#: ../exifography.php:141
+msgid "Settings"
+msgstr ""
+
+#: ../exifography.php:205
+msgid "yes"
+msgstr ""
+
+#: ../exifography.php:207
+msgid "no"
+msgstr ""
+
+#: ../exifography.php:300
+msgid "mm"
+msgstr ""
+
+#: ../exifography.php:392
+msgid "Exifography Options"
+msgstr ""
+
+#: ../exifography.php:393
+msgid ""
+"For instructions and support please visit the <a target=\"_blank\" href="
+"\"http://www.kristarella.com/exifography\">Exifography plugin page</a>."
+msgstr ""
+
+#: ../exifography.php:407
+msgid "Default EXIF"
+msgstr ""
+
+#: ../exifography.php:408
+msgid "Auto insert into post"
+msgstr ""
+
+#: ../exifography.php:409
+msgid "Custom HTML"
+msgstr ""
+
+#: ../exifography.php:415
+msgid "Automatically display exif"
+msgstr ""
+
+#: ../exifography.php:420
+msgid "Timestamp format"
+msgstr ""
+
+#: ../exifography.php:421
+msgid "Turn off item label"
+msgstr ""
+
+#: ../exifography.php:422
+msgid "Link GEO EXIF to Google Maps"
+msgstr ""
+
+#: ../exifography.php:423
+msgid "Display map thumbnail instead of location coords"
+msgstr ""
+
+#: ../exifography.php:424
+msgid "Map zoom (0 is the widest, 21 is close)"
+msgstr ""
+
+#: ../exifography.php:425
+msgid "Map width"
+msgstr ""
+
+#: ../exifography.php:426
+msgid "Map height"
+msgstr ""
+
+#: ../exifography.php:435
+msgid ""
+"Set these to create default display options. In the absence of any other "
+"settings, these will be used when EXIF is displayed. You can override these "
+"within an individual post, shortcode, or function."
+msgstr ""
+
+#: ../exifography.php:440
+msgid ""
+"Use this option to automatically insert the EXIF for the first image "
+"attached to your post. Only use this when most of your posts will need EXIF, "
+"you can override this by deselecting all the post display options when "
+"editing a single post."
+msgstr ""
+
+#: ../exifography.php:445
+msgid ""
+"This is the HTML used to display your exif data. IDs and classes can be used "
+"for styling."
+msgstr ""
+
+#: ../exifography.php:521
+msgid "Add EXIF to post"
+msgstr ""
+
+#: ../exifography.php:541
+msgid ""
+"If there is a photo attached to this post, the following details may be "
+"added to the end of the post."
+msgstr ""

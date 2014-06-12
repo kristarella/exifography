@@ -1,0 +1,494 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Exifography\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-26 09:40+1000\n"
+"PO-Revision-Date: 2013-11-26 09:40+1000\n"
+"Last-Translator: Kristen Symonds <kristarella@gmail.com>\n"
+"Language-Team: Konrad Tadesse <konrad.tadesse@pixelpark.com>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:36
+#: ../tags/1.0.2/thesography.php:214 ../tags/1.0.2/thesography.php:347
+#: ../tags/1.0.3/thesography.php:226 ../tags/1.0.3/thesography.php:360
+#: ../tags/1.0.3.1/thesography.php:226 ../tags/1.0.3.1/thesography.php:360
+#: ../tags/1.0.3.2/thesography.php:226 ../tags/1.0.3.2/thesography.php:360
+#: ../tags/1.1.1/exifography.php:38 ../tags/1.1.3/exifography.php:38
+#: ../tags/1.1.3.1/exifography.php:38 ../tags/1.1.3.2/exifography.php:38
+#: ../tags/1.1.3.3/exifography.php:38 ../trunk/exifography.php:38
+msgid "Aperture"
+msgstr "Blende"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:37
+#: ../tags/1.0.2/thesography.php:216 ../tags/1.0.2/thesography.php:350
+#: ../tags/1.0.3/thesography.php:228 ../tags/1.0.3/thesography.php:363
+#: ../tags/1.0.3.1/thesography.php:228 ../tags/1.0.3.1/thesography.php:363
+#: ../tags/1.0.3.2/thesography.php:228 ../tags/1.0.3.2/thesography.php:363
+#: ../tags/1.1.1/exifography.php:39 ../tags/1.1.3/exifography.php:39
+#: ../tags/1.1.3.1/exifography.php:39 ../tags/1.1.3.2/exifography.php:39
+#: ../tags/1.1.3.3/exifography.php:39 ../trunk/exifography.php:39
+msgid "Credit"
+msgstr "Kredit"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:38
+#: ../tags/1.0.2/thesography.php:218 ../tags/1.0.2/thesography.php:353
+#: ../tags/1.0.3/thesography.php:230 ../tags/1.0.3/thesography.php:366
+#: ../tags/1.0.3.1/thesography.php:230 ../tags/1.0.3.1/thesography.php:366
+#: ../tags/1.0.3.2/thesography.php:230 ../tags/1.0.3.2/thesography.php:366
+#: ../tags/1.1.1/exifography.php:40 ../tags/1.1.3/exifography.php:40
+#: ../tags/1.1.3.1/exifography.php:40 ../tags/1.1.3.2/exifography.php:40
+#: ../tags/1.1.3.3/exifography.php:40 ../trunk/exifography.php:40
+msgid "Camera"
+msgstr "Kamera"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:39
+#: ../tags/1.0.2/thesography.php:220 ../tags/1.0.2/thesography.php:356
+#: ../tags/1.0.3/thesography.php:232 ../tags/1.0.3/thesography.php:369
+#: ../tags/1.0.3.1/thesography.php:232 ../tags/1.0.3.1/thesography.php:369
+#: ../tags/1.0.3.2/thesography.php:232 ../tags/1.0.3.2/thesography.php:369
+#: ../tags/1.1.1/exifography.php:41 ../tags/1.1.3/exifography.php:41
+#: ../tags/1.1.3.1/exifography.php:41 ../tags/1.1.3.2/exifography.php:41
+#: ../tags/1.1.3.3/exifography.php:41 ../trunk/exifography.php:41
+msgid "Caption"
+msgstr "Beschriftung"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:40
+#: ../tags/1.0.2/thesography.php:359 ../tags/1.0.3/thesography.php:372
+#: ../tags/1.0.3.1/thesography.php:372 ../tags/1.0.3.2/thesography.php:372
+#: ../tags/1.1.1/exifography.php:42 ../tags/1.1.3/exifography.php:42
+#: ../tags/1.1.3.1/exifography.php:42 ../tags/1.1.3.2/exifography.php:42
+#: ../tags/1.1.3.3/exifography.php:42 ../trunk/exifography.php:42
+msgid "Taken"
+msgstr "Aufgenommen"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:41
+#: ../tags/1.0.2/thesography.php:224 ../tags/1.0.2/thesography.php:362
+#: ../tags/1.0.3/thesography.php:236 ../tags/1.0.3/thesography.php:375
+#: ../tags/1.0.3.1/thesography.php:236 ../tags/1.0.3.1/thesography.php:375
+#: ../tags/1.0.3.2/thesography.php:236 ../tags/1.0.3.2/thesography.php:375
+#: ../tags/1.1.1/exifography.php:43 ../tags/1.1.3/exifography.php:43
+#: ../tags/1.1.3.1/exifography.php:43 ../tags/1.1.3.2/exifography.php:43
+#: ../tags/1.1.3.3/exifography.php:43 ../trunk/exifography.php:43
+msgid "Copyright"
+msgstr "Urheberrecht"
+
+#: ../branches/exifography/exifography.php:42 ../tags/1.1.1/exifography.php:44
+#: ../tags/1.1.3/exifography.php:44 ../tags/1.1.3.1/exifography.php:44
+#: ../tags/1.1.3.2/exifography.php:44 ../tags/1.1.3.3/exifography.php:44
+#: ../trunk/exifography.php:44
+msgid "Exposure bias"
+msgstr "Belichtungsvorgabe"
+
+#: ../branches/exifography/exifography.php:43 ../tags/1.1.1/exifography.php:45
+#: ../tags/1.1.3/exifography.php:45 ../tags/1.1.3.1/exifography.php:45
+#: ../tags/1.1.3.2/exifography.php:45 ../tags/1.1.3.3/exifography.php:45
+#: ../trunk/exifography.php:45
+msgid "Flash fired"
+msgstr "Blitz"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:44
+#: ../tags/1.0.2/thesography.php:226 ../tags/1.0.2/thesography.php:365
+#: ../tags/1.0.3/thesography.php:238 ../tags/1.0.3/thesography.php:378
+#: ../tags/1.0.3.1/thesography.php:238 ../tags/1.0.3.1/thesography.php:378
+#: ../tags/1.0.3.2/thesography.php:238 ../tags/1.0.3.2/thesography.php:378
+#: ../tags/1.1.1/exifography.php:46 ../tags/1.1.3/exifography.php:46
+#: ../tags/1.1.3.1/exifography.php:46 ../tags/1.1.3.2/exifography.php:46
+#: ../tags/1.1.3.3/exifography.php:46 ../trunk/exifography.php:46
+msgid "Focal length"
+msgstr "Brennweite"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:45
+#: ../tags/1.0.2/thesography.php:228 ../tags/1.0.2/thesography.php:368
+#: ../tags/1.0.3/thesography.php:240 ../tags/1.0.3/thesography.php:381
+#: ../tags/1.0.3.1/thesography.php:240 ../tags/1.0.3.1/thesography.php:381
+#: ../tags/1.0.3.2/thesography.php:240 ../tags/1.0.3.2/thesography.php:381
+#: ../tags/1.1.1/exifography.php:47 ../tags/1.1.3/exifography.php:47
+#: ../tags/1.1.3.1/exifography.php:47 ../tags/1.1.3.2/exifography.php:47
+#: ../tags/1.1.3.3/exifography.php:47 ../trunk/exifography.php:47
+msgid "ISO"
+msgstr "ISO"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:46
+#: ../tags/1.0.2/thesography.php:230 ../tags/1.0.2/thesography.php:371
+#: ../tags/1.0.3/thesography.php:242 ../tags/1.0.3/thesography.php:384
+#: ../tags/1.0.3.1/thesography.php:242 ../tags/1.0.3.1/thesography.php:384
+#: ../tags/1.0.3.2/thesography.php:242 ../tags/1.0.3.2/thesography.php:384
+#: ../tags/1.1.1/exifography.php:48 ../tags/1.1.3/exifography.php:48
+#: ../tags/1.1.3.1/exifography.php:48 ../tags/1.1.3.2/exifography.php:49
+#: ../tags/1.1.3.3/exifography.php:49 ../trunk/exifography.php:49
+msgid "Location"
+msgstr "Position"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:47
+#: ../tags/1.0.2/thesography.php:232 ../tags/1.0.2/thesography.php:374
+#: ../tags/1.0.3/thesography.php:244 ../tags/1.0.3/thesography.php:387
+#: ../tags/1.0.3.1/thesography.php:244 ../tags/1.0.3.1/thesography.php:387
+#: ../tags/1.0.3.2/thesography.php:244 ../tags/1.0.3.2/thesography.php:387
+#: ../tags/1.1.1/exifography.php:49 ../tags/1.1.3/exifography.php:49
+#: ../tags/1.1.3.1/exifography.php:49 ../tags/1.1.3.2/exifography.php:50
+#: ../tags/1.1.3.3/exifography.php:50 ../trunk/exifography.php:50
+msgid "Shutter speed"
+msgstr "Verschlusszeit"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:48
+#: ../tags/1.0.2/thesography.php:234 ../tags/1.0.2/thesography.php:393
+#: ../tags/1.0.3/thesography.php:246 ../tags/1.0.3/thesography.php:406
+#: ../tags/1.0.3.1/thesography.php:246 ../tags/1.0.3.1/thesography.php:406
+#: ../tags/1.0.3.2/thesography.php:246 ../tags/1.0.3.2/thesography.php:406
+#: ../tags/1.1.1/exifography.php:50 ../tags/1.1.3/exifography.php:50
+#: ../tags/1.1.3.1/exifography.php:50 ../tags/1.1.3.2/exifography.php:51
+#: ../tags/1.1.3.3/exifography.php:51 ../trunk/exifography.php:51
+msgid "Title"
+msgstr "Titel"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:51
+#: ../tags/1.0.2/thesography.php:186 ../tags/1.0.3/thesography.php:198
+#: ../tags/1.0.3.1/thesography.php:198 ../tags/1.0.3.2/thesography.php:198
+#: ../tags/1.1.1/exifography.php:53 ../tags/1.1.3/exifography.php:53
+#: ../tags/1.1.3.1/exifography.php:53 ../tags/1.1.3.2/exifography.php:54
+#: ../tags/1.1.3.3/exifography.php:54 ../trunk/exifography.php:54
+msgid "Before EXIF block"
+msgstr "Vor dem EXIF Block"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:52
+#: ../tags/1.0.2/thesography.php:188 ../tags/1.0.3/thesography.php:200
+#: ../tags/1.0.3.1/thesography.php:200 ../tags/1.0.3.2/thesography.php:200
+#: ../tags/1.1.1/exifography.php:54 ../tags/1.1.3/exifography.php:54
+#: ../tags/1.1.3.1/exifography.php:54 ../tags/1.1.3.2/exifography.php:55
+#: ../tags/1.1.3.3/exifography.php:55 ../trunk/exifography.php:55
+msgid "Before EXIF item"
+msgstr "Vor dem EXIF Artikel"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:53
+#: ../tags/1.0.2/thesography.php:190 ../tags/1.0.3/thesography.php:202
+#: ../tags/1.0.3.1/thesography.php:202 ../tags/1.0.3.2/thesography.php:202
+#: ../tags/1.1.1/exifography.php:55 ../tags/1.1.3/exifography.php:55
+#: ../tags/1.1.3.1/exifography.php:55 ../tags/1.1.3.2/exifography.php:56
+#: ../tags/1.1.3.3/exifography.php:56 ../trunk/exifography.php:56
+msgid "After EXIF item"
+msgstr "Nach dem EXIF Artikel"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:54
+#: ../tags/1.0.2/thesography.php:192 ../tags/1.0.3/thesography.php:204
+#: ../tags/1.0.3.1/thesography.php:204 ../tags/1.0.3.2/thesography.php:204
+#: ../tags/1.1.1/exifography.php:56 ../tags/1.1.3/exifography.php:56
+#: ../tags/1.1.3.1/exifography.php:56 ../tags/1.1.3.2/exifography.php:57
+#: ../tags/1.1.3.3/exifography.php:57 ../trunk/exifography.php:57
+msgid "After EXIF block"
+msgstr "Nach dem EXIF Block"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:55
+#: ../tags/1.0.2/thesography.php:194 ../tags/1.0.3/thesography.php:206
+#: ../tags/1.0.3.1/thesography.php:206 ../tags/1.0.3.2/thesography.php:206
+#: ../tags/1.1.1/exifography.php:57 ../tags/1.1.3/exifography.php:57
+#: ../tags/1.1.3.1/exifography.php:57 ../tags/1.1.3.2/exifography.php:58
+#: ../tags/1.1.3.3/exifography.php:58 ../trunk/exifography.php:58
+msgid "Separator for EXIF label"
+msgstr "Trennzeichen für das EXIF Label"
+
+#: ../branches/exifography/exifography.php:126
+#: ../tags/1.1.1/exifography.php:136 ../tags/1.1.3/exifography.php:137
+#: ../tags/1.1.3.1/exifography.php:136 ../tags/1.1.3.2/exifography.php:141
+#: ../tags/1.1.3.3/exifography.php:141 ../trunk/exifography.php:141
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: ../branches/exifography/exifography.php:189
+#: ../tags/1.1.1/exifography.php:199 ../tags/1.1.3/exifography.php:200
+#: ../tags/1.1.3.1/exifography.php:199 ../tags/1.1.3.2/exifography.php:204
+#: ../tags/1.1.3.3/exifography.php:205 ../trunk/exifography.php:205
+msgid "yes"
+msgstr "Ja"
+
+#: ../branches/exifography/exifography.php:191
+#: ../tags/1.1.1/exifography.php:201 ../tags/1.1.3/exifography.php:202
+#: ../tags/1.1.3.1/exifography.php:201 ../tags/1.1.3.2/exifography.php:206
+#: ../tags/1.1.3.3/exifography.php:207 ../trunk/exifography.php:207
+msgid "no"
+msgstr "Nein"
+
+#: ../branches/exifography/exifography.php:278
+#: ../tags/1.1.1/exifography.php:288 ../tags/1.1.3/exifography.php:293
+#: ../tags/1.1.3.1/exifography.php:292 ../tags/1.1.3.2/exifography.php:297
+#: ../tags/1.1.3.3/exifography.php:298 ../trunk/exifography.php:300
+msgid "mm"
+msgstr "mm"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:356
+#: ../tags/1.1.1/exifography.php:366 ../tags/1.1.3/exifography.php:372
+#: ../tags/1.1.3.1/exifography.php:371 ../tags/1.1.3.2/exifography.php:383
+#: ../tags/1.1.3.3/exifography.php:390 ../trunk/exifography.php:392
+msgid "Exifography Options"
+msgstr "Exifography  Optionen"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:357
+#: ../tags/1.1.1/exifography.php:367 ../tags/1.1.3/exifography.php:373
+#: ../tags/1.1.3.1/exifography.php:372 ../tags/1.1.3.2/exifography.php:384
+#: ../tags/1.1.3.3/exifography.php:391 ../trunk/exifography.php:393
+msgid ""
+"For instructions and support please visit the <a target=\"_blank\" href="
+"\"http://www.kristarella.com/exifography\">Exifography plugin page</a>."
+msgstr ""
+"For instructions and support please visit the <a target=\"_blank\" href="
+"\"http://www.kristarella.com/exifography\">Exifography plugin page</a>."
+
+# @ thesography
+#: ../branches/exifography/exifography.php:371
+#: ../tags/1.1.1/exifography.php:381 ../tags/1.1.3/exifography.php:387
+#: ../tags/1.1.3.1/exifography.php:386 ../tags/1.1.3.2/exifography.php:398
+#: ../tags/1.1.3.3/exifography.php:405 ../trunk/exifography.php:407
+msgid "Default EXIF"
+msgstr "Standard EXIF Anzeige"
+
+#: ../branches/exifography/exifography.php:372
+#: ../tags/1.1.1/exifography.php:382 ../tags/1.1.3/exifography.php:388
+#: ../tags/1.1.3.1/exifography.php:387 ../tags/1.1.3.2/exifography.php:399
+#: ../tags/1.1.3.3/exifography.php:406 ../trunk/exifography.php:408
+msgid "Auto insert into post"
+msgstr "Automatisch in  Post eintragen und anzeigen."
+
+# @ thesography
+#: ../branches/exifography/exifography.php:373
+#: ../tags/1.1.1/exifography.php:383 ../tags/1.1.3/exifography.php:389
+#: ../tags/1.1.3.1/exifography.php:388 ../tags/1.1.3.2/exifography.php:400
+#: ../tags/1.1.3.3/exifography.php:407 ../trunk/exifography.php:409
+msgid "Custom HTML"
+msgstr "Dein angepasstes HTML"
+
+#: ../branches/exifography/exifography.php:379
+#: ../tags/1.1.1/exifography.php:389 ../tags/1.1.3/exifography.php:395
+#: ../tags/1.1.3.1/exifography.php:394 ../tags/1.1.3.2/exifography.php:406
+#: ../tags/1.1.3.3/exifography.php:413 ../trunk/exifography.php:415
+msgid "Automatically display exif"
+msgstr "Exif automatisch anzeigen"
+
+#: ../branches/exifography/exifography.php:384
+#: ../tags/1.1.1/exifography.php:394 ../tags/1.1.3/exifography.php:400
+#: ../tags/1.1.3.1/exifography.php:399 ../tags/1.1.3.2/exifography.php:411
+#: ../tags/1.1.3.3/exifography.php:418 ../trunk/exifography.php:420
+msgid "Timestamp format"
+msgstr "Zeitstempel-Format"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:385
+#: ../tags/1.0.2/thesography.php:196 ../tags/1.0.3/thesography.php:208
+#: ../tags/1.0.3.1/thesography.php:208 ../tags/1.0.3.2/thesography.php:208
+#: ../tags/1.1.1/exifography.php:395 ../tags/1.1.3/exifography.php:402
+#: ../tags/1.1.3.1/exifography.php:401 ../tags/1.1.3.2/exifography.php:413
+#: ../tags/1.1.3.3/exifography.php:420 ../trunk/exifography.php:422
+msgid "Link GEO EXIF to Google Maps"
+msgstr "Link GEO EXIF zu Google Maps"
+
+#: ../branches/exifography/exifography.php:386
+#: ../tags/1.1.1/exifography.php:396 ../tags/1.1.3/exifography.php:403
+#: ../tags/1.1.3.1/exifography.php:402 ../tags/1.1.3.2/exifography.php:414
+#: ../tags/1.1.3.3/exifography.php:421 ../trunk/exifography.php:423
+msgid "Display map thumbnail instead of location coords"
+msgstr "Landkarte anstatt nur die Standortkoordinaten anzeigen"
+
+#: ../branches/exifography/exifography.php:387
+#: ../tags/1.1.1/exifography.php:397 ../tags/1.1.3/exifography.php:404
+#: ../tags/1.1.3.1/exifography.php:403 ../tags/1.1.3.2/exifography.php:415
+#: ../tags/1.1.3.3/exifography.php:422 ../trunk/exifography.php:424
+msgid "Map zoom (0 is the widest, 21 is close)"
+msgstr "Karten Zoomeinstellung (0 ist die entfernteste, 21 ist die näheste)"
+
+#: ../branches/exifography/exifography.php:388
+#: ../tags/1.1.1/exifography.php:398 ../tags/1.1.3/exifography.php:405
+#: ../tags/1.1.3.1/exifography.php:404 ../tags/1.1.3.2/exifography.php:416
+#: ../tags/1.1.3.3/exifography.php:423 ../trunk/exifography.php:425
+msgid "Map width"
+msgstr "Kartenbild Breite"
+
+#: ../branches/exifography/exifography.php:389
+#: ../tags/1.1.1/exifography.php:399 ../tags/1.1.3/exifography.php:406
+#: ../tags/1.1.3.1/exifography.php:405 ../tags/1.1.3.2/exifography.php:417
+#: ../tags/1.1.3.3/exifography.php:424 ../trunk/exifography.php:426
+msgid "Map height"
+msgstr "Kartenbild Höhe"
+
+#: ../branches/exifography/exifography.php:398
+#: ../tags/1.1.1/exifography.php:408 ../tags/1.1.3/exifography.php:415
+#: ../tags/1.1.3.1/exifography.php:414 ../tags/1.1.3.2/exifography.php:426
+#: ../tags/1.1.3.3/exifography.php:433 ../trunk/exifography.php:435
+msgid ""
+"Set these to create default display options. In the absence of any other "
+"settings, these will be used when EXIF is displayed. You can override these "
+"within an individual post, shortcode, or function."
+msgstr "Alle aktiverten Felder werden automatisch angezeigt werden."
+
+#: ../branches/exifography/exifography.php:403
+#: ../tags/1.1.1/exifography.php:413 ../tags/1.1.3/exifography.php:420
+#: ../tags/1.1.3.1/exifography.php:419 ../tags/1.1.3.2/exifography.php:431
+#: ../tags/1.1.3.3/exifography.php:438 ../trunk/exifography.php:440
+msgid ""
+"Use this option to automatically insert the EXIF for the first image "
+"attached to your post. Only use this when most of your posts will need EXIF, "
+"you can override this by deselecting all the post display options when "
+"editing a single post."
+msgstr ""
+"Auf allen Posts Exif automatisch anzeigen lassen? Aktiviere diese Funktion "
+"nur dann, wenn auf den meisten Posts Exif angezeigen sollen. Beim Erstellen "
+"eines Posts kann diese Standardoption geändert werden."
+
+# @ thesography
+#: ../branches/exifography/exifography.php:408
+#: ../tags/1.0.2/thesography.php:185 ../tags/1.0.3/thesography.php:197
+#: ../tags/1.0.3.1/thesography.php:197 ../tags/1.0.3.2/thesography.php:197
+#: ../tags/1.1.1/exifography.php:418 ../tags/1.1.3/exifography.php:425
+#: ../tags/1.1.3.1/exifography.php:424 ../tags/1.1.3.2/exifography.php:436
+#: ../tags/1.1.3.3/exifography.php:443 ../trunk/exifography.php:445
+msgid ""
+"This is the HTML used to display your exif data. IDs and classes can be used "
+"for styling."
+msgstr ""
+"Diese  HTML Tags werden verwendet um die  EXIF-Daten anzuzeigen. IDs und "
+"Klassen können für das Styling verwendet werden."
+
+# @ thesography
+#: ../branches/exifography/exifography.php:497 ../tags/1.0/thesography.php:37
+#: ../tags/1.0.1/thesography.php:37 ../tags/1.0.2/thesography.php:40
+#: ../tags/1.0.3/thesography.php:41 ../tags/1.0.3.1/thesography.php:41
+#: ../tags/1.0.3.2/thesography.php:41 ../tags/1.1.1/exifography.php:507
+#: ../tags/1.1.3/exifography.php:524 ../tags/1.1.3.1/exifography.php:523
+#: ../tags/1.1.3.2/exifography.php:535 ../tags/1.1.3.3/exifography.php:520
+#: ../trunk/exifography.php:521
+msgid "Add EXIF to post"
+msgstr "Füge EXIF zum Beitrag hinzu"
+
+# @ thesography
+#: ../branches/exifography/exifography.php:516
+#: ../tags/1.0.2/thesography.php:73 ../tags/1.0.3/thesography.php:74
+#: ../tags/1.0.3.1/thesography.php:74 ../tags/1.0.3.2/thesography.php:74
+#: ../tags/1.1.1/exifography.php:526 ../tags/1.1.3/exifography.php:543
+#: ../tags/1.1.3.1/exifography.php:542 ../tags/1.1.3.2/exifography.php:554
+#: ../tags/1.1.3.3/exifography.php:540 ../trunk/exifography.php:541
+msgid ""
+"If there is a photo attached to this post, the following details may be "
+"added to the end of the post."
+msgstr ""
+"Falls ein Bild zum Beitrag hinzugefügt ist, so können die folgenden EXIF-"
+"Daten an das Ende eines Beitrags hinzugefügt werden."
+
+# @ default
+#: ../tags/1.0/thesography.php:194 ../tags/1.0.1/thesography.php:196
+#: ../tags/1.0.2/thesography.php:199 ../tags/1.0.3/thesography.php:211
+#: ../tags/1.0.3.1/thesography.php:211 ../tags/1.0.3.2/thesography.php:211
+msgid "Save Changes"
+msgstr "Änderungen übernehmen"
+
+# @ thesography
+#: ../tags/1.0.2/thesography.php:62 ../tags/1.0.2/thesography.php:97
+#: ../tags/1.0.2/thesography.php:303 ../tags/1.0.3/thesography.php:63
+#: ../tags/1.0.3/thesography.php:98 ../tags/1.0.3/thesography.php:316
+#: ../tags/1.0.3.1/thesography.php:63 ../tags/1.0.3.1/thesography.php:98
+#: ../tags/1.0.3.1/thesography.php:316 ../tags/1.0.3.2/thesography.php:63
+#: ../tags/1.0.3.2/thesography.php:98 ../tags/1.0.3.2/thesography.php:316
+msgid ""
+"Please visit the <a href=\"options-general.php?page=thesography"
+"\">Thesography Options</a> before use."
+msgstr ""
+"Siehe zuerst auf: <a href=\"options-general.php?page=thesography"
+"\">Thesography Options</a> nach."
+
+# @ thesography
+#: ../tags/1.0.2/thesography.php:164 ../tags/1.0.3/thesography.php:166
+#: ../tags/1.0.3.1/thesography.php:166 ../tags/1.0.3.2/thesography.php:166
+msgid "Options saved!"
+msgstr "Optionen gesichert!"
+
+# @ thesography
+#: ../tags/1.0.2/thesography.php:177 ../tags/1.0.3/thesography.php:180
+#: ../tags/1.0.3.1/thesography.php:180 ../tags/1.0.3.2/thesography.php:180
+msgid "Thesography Options"
+msgstr "Thesography Optionen"
+
+# @ thesography
+#: ../tags/1.0.2/thesography.php:178 ../tags/1.0.3/thesography.php:181
+#: ../tags/1.0.3.1/thesography.php:181 ../tags/1.0.3.2/thesography.php:181
+msgid ""
+"For instructions and support please visit the <a target=\"_blank\" href="
+"\"http://www.kristarella.com/thesography\">Thesography plugin page</a>."
+msgstr ""
+"For instructions and support please visit the <a target=\"_blank\" href="
+"\"http://www.kristarella.com/thesography\">Thesography plugin page</a>."
+
+# @ thesography
+#: ../tags/1.0.2/thesography.php:181 ../tags/1.0.3/thesography.php:184
+#: ../tags/1.0.3.1/thesography.php:184 ../tags/1.0.3.2/thesography.php:184
+msgid "Default EXIF to display"
+msgstr "Standard EXIF Anzeige"
+
+#  thesography
+#: ../tags/1.0.2/thesography.php:182 ../tags/1.0.3/thesography.php:185
+#: ../tags/1.0.3.1/thesography.php:185 ../tags/1.0.3.2/thesography.php:185
+msgid ""
+"Set these to create default options for every post. This is useful when "
+"<strong>most</strong> of your posts will be displaying EXIF for <strong>a "
+"single photo</strong>, and if you're not adding EXIF manually via shortcodes "
+"or custom functions."
+msgstr "ihr"
+
+# @ thesography
+#: ../tags/1.0.2/thesography.php:184 ../tags/1.0.3/thesography.php:196
+#: ../tags/1.0.3.1/thesography.php:196 ../tags/1.0.3.2/thesography.php:196
+msgid "Your Custom HTML"
+msgstr "Deine angepasstes HTML"
+
+# @ thesography
+#: ../tags/1.0.2/thesography.php:222 ../tags/1.0.3/thesography.php:234
+#: ../tags/1.0.3.1/thesography.php:234 ../tags/1.0.3.2/thesography.php:234
+msgid "Creation time"
+msgstr "Aufnahme Zeitpunkt"
+
+# @ thesography
+#: ../tags/1.0.3/thesography.php:190 ../tags/1.0.3.1/thesography.php:190
+#: ../tags/1.0.3.2/thesography.php:190
+msgid "Thesis Related Options"
+msgstr "Theme Thesis bezogene Optionen"
+
+# @ thesography
+#: ../tags/1.0.3/thesography.php:192 ../tags/1.0.3.1/thesography.php:192
+#: ../tags/1.0.3.2/thesography.php:192
+msgid "Check this to <strong>turn off</strong> auto insert in Thesis"
+msgstr ""
+"Aktivieren die Option <strong>deaktivieren</ strong> um die automatische "
+"Exif-Anzeige auszuschalten."
+
+#: ../tags/1.1.3/exifography.php:401
+msgid "Show label"
+msgstr ""
+
+#: ../tags/1.1.3.1/exifography.php:400 ../tags/1.1.3.2/exifography.php:412
+#: ../tags/1.1.3.3/exifography.php:419 ../trunk/exifography.php:421
+msgid "Turn off item label"
+msgstr ""
