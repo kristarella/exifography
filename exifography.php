@@ -206,7 +206,7 @@ if (!class_exists("exifography")) {
 					$show_geo = '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
 				elseif (array_key_exists('geo_imgv3',$options) && !array_key_exists('geo_img',$options) && !array_key_exists('geo_link',$options)){
 					//Enqueue Google Maps V3 API Javascript
-					wp_enqueue_script( 'exif_gmapv3_js', 'https://maps.googleapis.com/maps/api/js?v=3.exp' );
+					wp_enqueue_script( 'exif_gmapv3_js', '//maps.googleapis.com/maps/api/js?v=3.exp' );
 					wp_enqueue_script( 'exif_gmap_init_js', plugins_url() . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'js/googlemapsinit.js', array( 'jquery' ) );
 
 					//Configure map settings
