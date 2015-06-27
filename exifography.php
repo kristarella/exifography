@@ -162,6 +162,18 @@ if (!class_exists("exifography")) {
 					$this->geo_frac2dec($fracs[1]) / 60 +
 					$this->geo_frac2dec($fracs[2]) / 3600;
 		}
+		function gmap_object($mapSettings) {
+			//Build google maps container and set data attributes for each setting
+			$map = '<div class="map-container"';
+			foreach($mapSettings as $setting_key => $setting_value) {
+				$map .= ' data-' . $setting_key . '="' . $setting_value . '"' ;
+			}
+			$map .= '>'; // append end tag for .map-container
+        	$map .= '<div class="map-canvas"></div>';
+			$map .= '</div>'; // /.map-container
+
+			return $map;
+		}
 		function display_geo($imgmeta) {
 			$options = $this->get_options();
 			if (isset($imgmeta['image_meta']['latitude'])) {
@@ -192,7 +204,23 @@ if (!class_exists("exifography")) {
 					$show_geo = $geo_img_html;
 				elseif (array_key_exists('geo_link',$options) && !array_key_exists('geo_img',$options))
 					$show_geo = '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
-				else
+				elseif (array_key_exists('geo_imgv3',$options) && !array_key_exists('geo_img',$options) && !array_key_exists('geo_link',$options)){
+					//Enqueue Google Maps V3 API Javascript
+					wp_enqueue_script( 'exif_gmapv3_js', 'https://maps.googleapis.com/maps/api/js?v=3.exp' );
+					wp_enqueue_script( 'exif_gmap_init_js', plugins_url() . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'js/googlemapsinit.js', array( 'jquery' ) );
+
+					//Configure map settings
+					$mapSettings = array(
+						'latitude' => $lat,
+						'longitude' => $lng,
+						'height' => $options['geo_height'],
+						'width' => $options['geo_width'],
+						'zoom' => $options['geo_zoom'],
+						'title' => $geo_pretty_coords
+					);
+
+					$show_geo = $this->gmap_object($mapSettings);
+				} else
 					$show_geo = $geo_pretty_coords;
 
 				return $show_geo;
@@ -426,12 +454,13 @@ if (!class_exists("exifography")) {
 			add_settings_field('item_label',__('Turn off item label', 'exifography'),array($this,'label'),'plugin_options','custom_html');
 			add_settings_field('geo_link',__('Link GEO EXIF to Google Maps', 'exifography'),array($this,'geo_link'),'plugin_options','custom_html');
 			add_settings_field('geo_img',__('Display map thumbnail instead of location coords', 'exifography'),array($this,'geo_img'),'plugin_options','custom_html');
+			add_settings_field('geo_imgv3',__('Display map thumbnail using Google Maps API V3', 'exifography'),array($this,'geo_imgv3'),'plugin_options','custom_html');
 			add_settings_field('geo_zoom',__('Map zoom (0 is the widest, 21 is close)', 'exifography'),array($this,'geo_zoom'),'plugin_options','custom_html');
 			add_settings_field('geo_width',__('Map width', 'exifography'),array($this,'geo_width'),'plugin_options','custom_html');
 			add_settings_field('geo_height',__('Map height', 'exifography'),array($this,'geo_height'),'plugin_options','custom_html');
 
 			wp_enqueue_style( 'exif_admin_style', plugins_url() . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'css/admin.css' );
-			wp_enqueue_script('exif_admin_js',plugins_url() . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'js/admin.js',array('jquery'));
+			wp_enqueue_script('exif_admin_js', plugins_url() . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'js/admin.js',array('jquery'));
 		}
 
 		// render options sections
@@ -487,6 +516,11 @@ if (!class_exists("exifography")) {
 			$checked = isset($options['geo_img']) ? checked( $options['geo_img'], true, false) : false;
 			echo '<input id="geo_img" type="checkbox" name="'.$this->exif_options.'[geo_img]" '.$checked.' />';
 		}
+		function geo_imgv3() {
+			$options = $this->get_options();
+			$checked = isset($options['geo_imgv3']) ? checked( $options['geo_imgv3'], true, false) : false;
+			echo '<input id="geo_imgv3" type="checkbox" name="'.$this->exif_options.'[geo_imgv3]" '.$checked.' />';
+		}
 		function geo_zoom() {
 			$options = $this->get_options();
 			echo '<input type="text" id="geo_zoom" name="'.$this->exif_options.'[geo_zoom]" value="'.$options['geo_zoom'].'" class="regular-text code" />';
@@ -511,7 +545,7 @@ if (!class_exists("exifography")) {
 							$output['exif_fields'][] = $field;
 					}
 				}
-				elseif ($key == 'auto_insert' || $key == 'item_label' || $key == 'geo_link' || $key == 'geo_img') {
+				elseif ($key == 'auto_insert' || $key == 'item_label' || $key == 'geo_link' || $key == 'geo_img' || $key == 'geo_imgv3') {
 					$output[$key] = 1;
 				}
 				//validate numbers
