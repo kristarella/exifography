@@ -10,7 +10,7 @@ Author URI: http://www.kristarella.com
 
 /*
 	Exifography is Copyright 2011 Kristen Symonds
-	
+
 	Exifography is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
@@ -33,7 +33,7 @@ if (!class_exists("exifography")) {
 
 		public function __construct() {
 			$this->load_plugin_textdomain();
-			
+
 			$this->fields = array(
 				'aperture' => __('Aperture', 'exifography'),
 				'credit' => __('Credit', 'exifography'),
@@ -58,12 +58,12 @@ if (!class_exists("exifography")) {
 				'sep' => __('Separator for EXIF label', 'exifography'),
 			);
 		}
-		
+
 		public function load_plugin_textdomain() {
 		    $domain = 'exifography';
 		    // The "plugin_locale" filter is also used in load_plugin_textdomain()
 		    $locale = apply_filters('plugin_locale', get_locale(), $domain);
-		 
+
 		    load_textdomain($domain, WP_LANG_DIR.$domain.'-'.$locale.'.mo');
 		    load_plugin_textdomain($domain, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 		}
@@ -88,18 +88,18 @@ if (!class_exists("exifography")) {
 						$meta['lens'] = trim( $exif['LensMake'] );
 					if (!empty($exif['LensModel']))
 						$meta['lens'] .= ' '.trim( $exif['LensModel'] );*/
-			
+
 			return $meta;
 			}
 		}
-		
+
 		//Returns an array of admin options
 		function get_options() {
 			$current_options = get_option($this->exif_options);
 			if (!empty($current_options))
 				return $current_options;
 		}
-		
+
 		function activate() {
 			$defaults = array(
 				'before_block' => '<ul id="%s" class="exif">',
@@ -112,7 +112,7 @@ if (!class_exists("exifography")) {
 				'geo_width' => '100',
 				'geo_height' => '100',
 			);
-			
+
 			$old_options = get_option('thesography_options');
 			$current_options = get_option($this->exif_options);
 			if (!empty($old_options)) {
@@ -129,21 +129,21 @@ if (!class_exists("exifography")) {
 			else
 				$options = $defaults;
 			update_option($this->exif_options, $options);
-			
+
 			if (!empty($options))
 				return true;
 			else
 				wp_redirect(get_admin_url() . 'options-general.php?page=exifography');
 		}
-		
+
 		// add settings link on plugin page
 		function plugin_links($links) {
 			$settings_link = '<a href="options-general.php?page=exifography">'.__('Settings').'</a>';
 			array_unshift( $links, $settings_link );
 			return $links;
 		}
-		
-		
+
+
 		// === DISPLAY EXIF === //
 		// return geo exif in a nice form
 		function geo_frac2dec($str) {
@@ -178,11 +178,11 @@ if (!class_exists("exifography")) {
 				$lng = $this->geo_single_fracs2dec($longitude);
 				if ($lat_ref == 'S') { $neg_lat = '-'; } else { $neg_lat = ''; }
 				if ($lng_ref == 'W') { $neg_lng = '-'; } else { $neg_lng = ''; }
-				
+
 				$geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
 				$geo_pretty_coords = $this->geo_pretty_fracs2dec($latitude) . $lat_ref . ' ' . $this->geo_pretty_fracs2dec($longitude) . $lng_ref;
-				$gmap_url = 'http://maps.google.com/maps?q=' .$geo_coords. '&ll=' .$geo_coords. '&z=11';
-				$geo_img_url = 'http://maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
+				$gmap_url = '//maps.google.com/maps?q=' .$geo_coords. '&ll=' .$geo_coords. '&z=11';
+				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
 &markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false';
 				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords.'" width="'.$options['geo_width'].'" height="'.$options['geo_height'].'" style="vertical-align:top;" />';
 
@@ -194,7 +194,7 @@ if (!class_exists("exifography")) {
 					$show_geo = '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
 				else
 					$show_geo = $geo_pretty_coords;
-				
+
 				return $show_geo;
 			}
 		}
@@ -222,12 +222,12 @@ if (!class_exists("exifography")) {
 				}
 				else
 					$speed = $imgmeta['image_meta']['shutter_speed']."s";
-				
+
 				return $speed;
 			}
 		}
-		
-		
+
+
 		// render exif data in posts
 		public function display_exif($display=null,$imgID=null) {
 			global $post;
@@ -249,7 +249,7 @@ if (!class_exists("exifography")) {
 				foreach ($post_options as $field)
 					$options['exif_fields'][] = $field;
 			}
-			
+
 			// in case there are thesograhy format options
 			$old_fields = array(
 				'time' => 'created_timestamp',
@@ -277,10 +277,10 @@ if (!class_exists("exifography")) {
 					}
 				}
 			}
-			
+
 			$imgmeta = wp_get_attachment_metadata($imgID);
 			if (!empty($imgmeta['image_meta'])) :
-			
+
 			$output = array();
 			foreach ($this->fields as $key => $value) {
 				if (empty($options['item_label']))
@@ -318,7 +318,7 @@ if (!class_exists("exifography")) {
 						$exif = $this->pretty_shutter_speed($imgmeta);
 					else
 						$exif = $imgmeta['image_meta'][$key];
-					
+
 					if ($exif)
 						$output[$key] = sprintf(stripslashes($options['before_item']),$key) . $value . stripslashes($options['sep']) . $exif . stripslashes($options['after_item']);
 				}
@@ -330,10 +330,10 @@ if (!class_exists("exifography")) {
 				$output = sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) . implode('',$output) . stripslashes($options['after_block']);
 			else
 				$output = "";
-			
+
 			return $output;
 		}
-		
+
 		//render shortcode
 		function shortcode($atts, $content = null) {
 			global $post;
@@ -342,12 +342,12 @@ if (!class_exists("exifography")) {
 				$post_options = $post_options;
 			else
 				$post_options = "all";
-		
+
 			extract(shortcode_atts(array(
 				'show' => $post_options,
 				'id' => '',
 			), $atts));
-		
+
 			$images = get_children(array(
 				'post_parent' => $post->ID,
 				'post_type' => 'attachment',
@@ -361,19 +361,19 @@ if (!class_exists("exifography")) {
 					$imageID = $image->ID;
 				}
 			}
-			
+
 			if ($id == '')
 				$imgID = $imageID;
 			else
 				$imgID = $id;
-		
-		
+
+
 			$display = $show;
-		
-		
+
+
 			return $this->display_exif($display,$imgID);
 		}
-		
+
 		//auto insert
 		function auto_insert($content) {
 			$options = $this->get_options();
@@ -382,13 +382,13 @@ if (!class_exists("exifography")) {
 			else
 				return $content;
 		}
-		
+
 		// === ADMIN OPTIONS === //
 		// add the options page under Settings
 		function admin_page() {
 			add_options_page('Exifography Options', 'Exifography', 'manage_options', 'exifography', array($this,'options_page'));
 		}
-		
+
 		// render the admin page
 		function options_page() {
 		?>
@@ -399,13 +399,13 @@ if (!class_exists("exifography")) {
 	<form action="options.php" method="post" class="exifography">
 	<?php settings_fields($this->exif_options); ?>
 	<?php do_settings_sections('plugin_options'); ?>
-	
+
 	<p><input class="button-primary" name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" /></p>
 	</form>
 </div>
 		<?php
 		}
-		
+
 		// add the admin settings to the database and page
 		function options_init(){
 			register_setting( $this->exif_options, $this->exif_options, array($this,'options_validate') );
@@ -429,11 +429,11 @@ if (!class_exists("exifography")) {
 			add_settings_field('geo_zoom',__('Map zoom (0 is the widest, 21 is close)', 'exifography'),array($this,'geo_zoom'),'plugin_options','custom_html');
 			add_settings_field('geo_width',__('Map width', 'exifography'),array($this,'geo_width'),'plugin_options','custom_html');
 			add_settings_field('geo_height',__('Map height', 'exifography'),array($this,'geo_height'),'plugin_options','custom_html');
-			
-			wp_enqueue_style( 'exif_admin_style', WP_PLUGIN_URL . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'css/admin.css' );
-			wp_enqueue_script('exif_admin_js',WP_PLUGIN_URL . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'js/admin.js',array('jquery'));
+
+			wp_enqueue_style( 'exif_admin_style', plugins_url() . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'css/admin.css' );
+			wp_enqueue_script('exif_admin_js',plugins_url() . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'js/admin.js',array('jquery'));
 		}
-		
+
 		// render options sections
 		function defaults() {
 ?>
@@ -443,14 +443,14 @@ if (!class_exists("exifography")) {
 		function auto() {
 ?>
 <p><?php _e("Use this option to automatically insert the EXIF for the first image attached to your post. Only use this when most of your posts will need EXIF, you can override this by deselecting all the post display options when editing a single post.", 'exifography'); ?></p>
-<?php	
+<?php
 		}
 		function html() {
 ?>
 <p><?php _e('This is the HTML used to display your exif data. IDs and classes can be used for styling.', 'exifography'); ?></p>
 <?php
 		}
-		
+
 		// render inputs
 		function default_fields($key) {
 			$options = $this->get_options();
@@ -499,7 +499,7 @@ if (!class_exists("exifography")) {
 			$options = $this->get_options();
 			echo '<input type="text" id="geo_height" name="'.$this->exif_options.'[geo_height]" value="'.$options['geo_height'].'" class="regular-text code" />';
 		}
-		
+
 		// validate options
 		function options_validate($input) {
 			$output = array();
@@ -514,14 +514,14 @@ if (!class_exists("exifography")) {
 				elseif ($key == 'auto_insert' || $key == 'item_label' || $key == 'geo_link' || $key == 'geo_img') {
 					$output[$key] = 1;
 				}
-				//validate numbers			
+				//validate numbers
 				elseif ($key == 'geo_zoom' || $key == 'geo_width' || $key == 'geo_height') {
 					if(preg_match('/^[0-9]*$/i',trim($value)))
 						$output[$key] = $value;
 				}
 				// everything else
 				else
-					$output[$key] = addslashes($value);	
+					$output[$key] = addslashes($value);
 			}
 			return $output;
 		}
@@ -537,10 +537,10 @@ if (!class_exists("exifography")) {
 		function edit_post_exif($post) {
 			wp_nonce_field( plugin_basename( __FILE__ ), 'exifography_noncename' );
 			echo '<input type="hidden" name="exif_saved" value="1">';
-			
+
 			// fetching Exifography options
 			$options = $this->get_options();
-			
+
 			if (get_post_meta($post->ID, '_use_exif'))
 				$set_exif = get_post_meta($post->ID, '_use_exif', true);
 			elseif (isset($options['exif_fields']))
@@ -563,11 +563,11 @@ if (!class_exists("exifography")) {
 
 		//saves the meta box options as a custom field called _use_exif
 		function save_postdata($post_id) {
-		
+
 			// Check if our nonce is set.
 			if ( ! isset( $_POST['exifography_noncename'] ) )
 				return $post_id;
-			
+
 			// verify this came from our screen and with proper authorization,
 			// because save_post can be triggered at other times
 			if (!wp_verify_nonce($_POST['exifography_noncename'], plugin_basename( __FILE__ ) ))
@@ -575,16 +575,16 @@ if (!class_exists("exifography")) {
 			if (!current_user_can( 'edit_post', $post_id ))
 				return $post_id;
 			// OK, we're authenticated
-			
+
 			if (isset($_POST['exif_fields']))
 				$use_exif = implode(',',$_POST['exif_fields']);
 			elseif (isset($_POST['exif_saved']) && !(isset($_POST['exif_fields'])))
 				$use_exif = 'none';
 			else
 				$use_exif = '';
-			
+
 			$current_data = get_post_meta($post_id, '_use_exif', true);
-			
+
 			if ($use_exif == '')
 				delete_post_meta($post_id, '_use_exif');
 			elseif ($use_exif == 'none')
@@ -594,7 +594,7 @@ if (!class_exists("exifography")) {
 			else
 				update_post_meta($post_id, '_use_exif', $current_data);
 		}
-		
+
 		//shows shortcode with ID for current image
 		function shortcode_id( $form_fields, $post ) {
 			$form_fields['exif_shortcode'] = array(
@@ -603,7 +603,7 @@ if (!class_exists("exifography")) {
 				'html' => "<input type='text' class='text' readonly='readonly' name='exif_shortcode' value='[exif id=\"".$post->ID."\"]' /><br />",
 				'helps' => 'Copy and paste into your post to show EXIF for this image',
 			);
-		
+
 			return $form_fields;
 		}
 	}
