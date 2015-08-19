@@ -633,7 +633,8 @@ if (!class_exists("exifography")) {
 	}
 }
 
-$exif = new exifography();
+if (class_exists('exifography'))
+	$exif = new exifography();
 
 // use this to manually insert the exif output in your theme
 function exifography_display_exif($fields=null,$imgID=null) {
