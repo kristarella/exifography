@@ -361,7 +361,7 @@ if (!class_exists("exifography")) {
 		function shortcode($atts, $content = null) {
 			global $post;
 			$post_options = get_post_meta($post->ID, '_use_exif', true);
-			if ("none" == $post_options || empty(post_options))
+			if ("none" == $post_options || empty($post_options))
 				$post_options = "all";
 
 			extract(shortcode_atts(array(
