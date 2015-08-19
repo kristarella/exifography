@@ -2,10 +2,13 @@
 /*
 Plugin Name: Exifography
 Plugin URI: http://www.kristarella.com/exifography
-Description: (Formerly Thesography) Displays EXIF data for images uploaded with WordPress and enables import of latitude and longitude EXIF to the database upon image upload.
-Author: kristarella
-Version: 1.1.3.8
+Description: Displays EXIF data for images uploaded with WordPress and enables import of latitude and longitude EXIF to the database upon image upload.
+Version: 1.2
 Author URI: http://www.kristarella.com
+Author: kristarella
+License: GPL2+
+Text Domain: exifography
+Domain Path: languages
 */
 
 /*
@@ -32,7 +35,7 @@ if (!class_exists("exifography")) {
 		public $html_options = array();
 
 		public function __construct() {
-			$this->load_plugin_textdomain();
+			load_plugin_textdomain( 'exifography', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 			
 			$this->fields = array(
 				'aperture' => __('Aperture', 'exifography'),
@@ -46,6 +49,7 @@ if (!class_exists("exifography")) {
 				'focal_length' => __('Focal length', 'exifography'),
 				'iso' => __('ISO', 'exifography'),
 				//'lens' => __('Lens', 'exifography'),
+				'keywords' => __('Keywords', 'exifography'),
 				'location' => __('Location', 'exifography'),
 				'shutter_speed' => __('Shutter speed', 'exifography'),
 				'title' => __('Title', 'exifography'),
@@ -57,40 +61,60 @@ if (!class_exists("exifography")) {
 				'after_block' => __('After EXIF block', 'exifography'),
 				'sep' => __('Separator for EXIF label', 'exifography'),
 			);
+			
+			register_activation_hook(__FILE__,array($this, 'activate'));
+			$this->init();
 		}
 		
-		public function load_plugin_textdomain() {
-		    $domain = 'exifography';
-		    // The "plugin_locale" filter is also used in load_plugin_textdomain()
-		    $locale = apply_filters('plugin_locale', get_locale(), $domain);
-		 
-		    load_textdomain($domain, WP_LANG_DIR.$domain.'-'.$locale.'.mo');
-		    load_plugin_textdomain($domain, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+		private function init() {
+			// actions
+			add_action('admin_menu', array($this, 'admin_page'));
+			add_action('admin_init', array($this, 'options_init'));
+			add_action('add_meta_boxes', array($this, 'add_post_box'));
+			add_action('save_post', array($this, 'save_postdata'));
+			add_shortcode('exif',array($this, 'shortcode'));
+			// filters
+			add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_links'));
+			add_filter('wp_read_image_metadata', array($this, 'add_exif'),'',3);
+			add_filter( 'attachment_fields_to_edit', array($this,'shortcode_id'), 10, 2 );
+			add_filter('the_content', array($this, 'auto_insert'),2);
 		}
 
 		// === ADD EXTRA EXIF TO DATABASE === //
 		function add_exif($meta,$file,$sourceImageType) {
+			if ( is_callable( 'iptcparse' ) ) {
+				getimagesize( $file, $info );
+				if ( ! empty( $info['APP13'] ) ) {
+					$iptc = iptcparse( $info['APP13'] );
+					if (!empty($iptc["2#025"]))
+						$meta['keywords'] = implode(', ',$iptc["2#025"]);
+				}
+			}
 			if ( is_callable('exif_read_data') && in_array($sourceImageType, apply_filters('wp_read_image_metadata_types', array(IMAGETYPE_JPEG, IMAGETYPE_TIFF_II, IMAGETYPE_TIFF_MM)) ) ) {
 				$exif = @exif_read_data( $file );
-					if (!empty($exif['GPSLatitude']))
-						$meta['latitude'] = $exif['GPSLatitude'] ;
-					if (!empty($exif['GPSLatitudeRef']))
-						$meta['latitude_ref'] = trim( $exif['GPSLatitudeRef'] );
-					if (!empty($exif['GPSLongitude']))
-						$meta['longitude'] = $exif['GPSLongitude'] ;
-					if (!empty($exif['GPSLongitudeRef']))
-						$meta['longitude_ref'] = trim( $exif['GPSLongitudeRef'] );
-					if (!empty($exif['ExposureBiasValue']))
-						$meta['exposure_bias'] = trim( $exif['ExposureBiasValue'] );
-					if (!empty($exif['Flash']))
-						$meta['flash'] = trim( $exif['Flash'] );
-					/*if (!empty($exif['LensMake']))
-						$meta['lens'] = trim( $exif['LensMake'] );
-					if (!empty($exif['LensModel']))
-						$meta['lens'] .= ' '.trim( $exif['LensModel'] );*/
+				if (!empty($exif['GPSLatitude']))
+					$meta['latitude'] = $exif['GPSLatitude'] ;
+				if (!empty($exif['GPSLatitudeRef']))
+					$meta['latitude_ref'] = trim( $exif['GPSLatitudeRef'] );
+				if (!empty($exif['GPSLongitude']))
+					$meta['longitude'] = $exif['GPSLongitude'] ;
+				if (!empty($exif['GPSLongitudeRef']))
+					$meta['longitude_ref'] = trim( $exif['GPSLongitudeRef'] );
+				if (!empty($exif['ExposureBiasValue']))
+					$meta['exposure_bias'] = trim( $exif['ExposureBiasValue'] );
+				if (!empty($exif['Flash']))
+					$meta['flash'] = trim( $exif['Flash'] );
+				/*if (!empty($exif['LensMake']))
+					$meta['lens'] = trim( $exif['LensMake'] );
+				if (!empty($exif['LensModel']))
+					$meta['lens'] .= ' '.trim( $exif['LensModel'] );*/
 			
-			return $meta;
 			}
+			array_walk($meta, function(&$value, $index){
+				if (is_string($value))
+					$value = sanitize_text_field($value);
+			});
+			return $meta;
 		}
 		
 		//Returns an array of admin options
@@ -181,8 +205,8 @@ if (!class_exists("exifography")) {
 				
 				$geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
 				$geo_pretty_coords = $this->geo_pretty_fracs2dec($latitude) . $lat_ref . ' ' . $this->geo_pretty_fracs2dec($longitude) . $lng_ref;
-				$gmap_url = 'http://maps.google.com/maps?q=' .$geo_coords. '&ll=' .$geo_coords. '&z=11';
-				$geo_img_url = 'http://maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
+				$gmap_url = '//maps.google.com/maps?q=' .$geo_coords. '&ll=' .$geo_coords. '&z=11';
+				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
 &markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false';
 				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords.'" width="'.$options['geo_width'].'" height="'.$options['geo_height'].'" style="vertical-align:top;" />';
 
@@ -293,7 +317,7 @@ if (!class_exists("exifography")) {
 					if ($key == 'aperture' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = '&#402;/'.$imgmeta['image_meta'][$key];
 					elseif ($key == 'created_timestamp' && !$imgmeta['image_meta'][$key] == 0)
-						$exif = date($options['timestamp'],$imgmeta['image_meta']['created_timestamp']);
+						$exif = date_i18n($options['timestamp'],$imgmeta['image_meta']['created_timestamp']);
 					elseif ($key == 'exposure_bias' && !$imgmeta['image_meta'][$key] == 0) {
 					 	$exposure_bias_parts = explode("/", $imgmeta['image_meta'][$key]);
 					 	if ($exposure_bias_parts[0] == "0")
@@ -326,23 +350,20 @@ if (!class_exists("exifography")) {
 
 			$output = apply_filters('exifography_display_exif',$output,$post->ID,$imgID);
 			endif;
-			if (!empty($output))
+			if (!empty($output)) {
 				$output = sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) . implode('',$output) . stripslashes($options['after_block']);
-			else
-				$output = "";
 			
-			return $output;
+				return $output;
+			}
 		}
 		
 		//render shortcode
 		function shortcode($atts, $content = null) {
 			global $post;
 			$post_options = get_post_meta($post->ID, '_use_exif', true);
-			if ($post_options)
-				$post_options = $post_options;
-			else
+			if ("none" == $post_options || empty(post_options))
 				$post_options = "all";
-		
+
 			extract(shortcode_atts(array(
 				'show' => $post_options,
 				'id' => '',
@@ -368,10 +389,7 @@ if (!class_exists("exifography")) {
 				$imgID = $id;
 		
 		
-			$display = $show;
-		
-		
-			return $this->display_exif($display,$imgID);
+			return $this->display_exif($show,$imgID);
 		}
 		
 		//auto insert
@@ -386,7 +404,13 @@ if (!class_exists("exifography")) {
 		// === ADMIN OPTIONS === //
 		// add the options page under Settings
 		function admin_page() {
-			add_options_page('Exifography Options', 'Exifography', 'manage_options', 'exifography', array($this,'options_page'));
+			add_options_page(
+				'Exifography Options',
+				'Exifography',
+				'manage_options',
+				'exifography',
+				array($this,'options_page')
+			);
 		}
 		
 		// render the admin page
@@ -466,7 +490,7 @@ if (!class_exists("exifography")) {
 		}
 		function html_fields($key) {
 			$options = $this->get_options();
-			echo "<input type='text' id='".$key."' name='$this->exif_options[$key]' value='".stripslashes($options[$key])."' class='regular-text code' />";
+			echo "<input type='text' id='".$key."' name='$this->exif_options[$key]' value='".esc_attr(stripslashes($options[$key]))."' class='regular-text code' />";
 		}
 		function timestamp() {
 			$options = $this->get_options();
@@ -608,23 +632,8 @@ if (!class_exists("exifography")) {
 		}
 	}
 }
-if (class_exists("exifography"))
-	$exif_plugin = new exifography();
 
-if (isset($exif_plugin)) {
-	// actions
-	register_activation_hook(__FILE__,array($exif_plugin, 'activate'));
-	add_action('admin_menu', array($exif_plugin, 'admin_page'));
-	add_action('admin_init', array($exif_plugin, 'options_init'));
-	add_action('add_meta_boxes', array($exif_plugin, 'add_post_box'));
-	add_action('save_post', array($exif_plugin, 'save_postdata'));
-	add_shortcode('exif',array($exif_plugin, 'shortcode'));
-	// filters
-	add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($exif_plugin, 'plugin_links'));
-	add_filter('wp_read_image_metadata', array($exif_plugin, 'add_exif'),'',3);
-	add_filter( 'attachment_fields_to_edit', array($exif_plugin,'shortcode_id'), 10, 2 );
-	add_filter('the_content', array($exif_plugin, 'auto_insert'),2);
-}
+$exif = new exifography();
 
 // use this to manually insert the exif output in your theme
 function exifography_display_exif($fields=null,$imgID=null) {
@@ -634,6 +643,8 @@ function exifography_display_exif($fields=null,$imgID=null) {
 	}
 }
 // this is deprecated don't use it anymore, use exifography_display_exif() instead
-function display_exif($fields=null,$imgID=null) {
-	return exifography_display_exif($fields,$imgID);
+if (!function_exists('display_exif')) {
+	function display_exif($fields=null,$imgID=null) {
+		return '<!-- Please replace your instances of "display_exif" with "exifography_display_exif". -->';
+	}
 }

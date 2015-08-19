@@ -3,8 +3,8 @@ Contributors: kristarella
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7439094
 Tags: exif, iptc, photos, photographs, photoblog
 Requires at least: 3.2
-Tested up to: 3.8
-Stable tag: 1.1.3.8
+Tested up to: 4.3
+Stable tag: 1.2
 
 Exifography displays EXIF data for images and enables import of latitude and longitude EXIF to the database.
 
@@ -49,6 +49,12 @@ See the above answer.
 2. Each post can have its own EXIF items displayed.
 
 == Changelog ==
+
+= 1.2 =
+* Fixed bug where shortcode with no show att doesn't display
+* changed google maps link to protocol agnostic
+* sanitise exif input
+* rearranged some functions
 
 = 1.1.3.8 =
 * Bug fixes
