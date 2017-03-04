@@ -58,6 +58,8 @@ if (!class_exists("exifography")) {
 				'before_block' => __('Before EXIF block', 'exifography'),
 				'before_item' => __('Before EXIF item', 'exifography'),
 				'after_item' => __('After EXIF item', 'exifography'),
+				'before_label' => __('Before EXIF label', 'exifography'),
+				'after_label' => __('After EXIF label', 'exifography'),
 				'after_block' => __('After EXIF block', 'exifography'),
 				'sep' => __('Separator for EXIF label', 'exifography'),
 			);
@@ -128,7 +130,9 @@ if (!class_exists("exifography")) {
 			$defaults = array(
 				'before_block' => '<ul id="%s" class="exif">',
 				'before_item' => '<li class="%s">',
-				'after_item' => '</li>',
+				'before_label' => '<label for="%s">',
+				'after_label' => '</label><span>',
+				'after_item' => '</span></li>',
 				'after_block' => '</ul>',
 				'sep' => ': ',
 				'timestamp' => 'j F, Y',
@@ -344,7 +348,13 @@ if (!class_exists("exifography")) {
 						$exif = $imgmeta['image_meta'][$key];
 					
 					if ($exif)
-						$output[$key] = sprintf(stripslashes($options['before_item']),$key) . $value . stripslashes($options['sep']) . $exif . stripslashes($options['after_item']);
+						$output[$key] = sprintf(stripslashes($options['before_item']),$key)
+							. sprintf(stripslashes($options['before_label']),$key)
+							. $value
+							. stripslashes($options['sep'])
+							. stripslashes($options['after_label'])
+							. $exif
+							. stripslashes($options['after_item']);
 				}
 			}
 
