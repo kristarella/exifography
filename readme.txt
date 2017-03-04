@@ -50,6 +50,9 @@ See the above answer.
 
 == Changelog ==
 
+= 1.2.1 =
+* Added finer EXIF label customisation selectors (ul.exif li label)
+
 = 1.2 =
 * Fixed bug where shortcode with no show att doesn't display
 * changed google maps link to protocol agnostic
