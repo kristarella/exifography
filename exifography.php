@@ -135,6 +135,7 @@ if (!class_exists("exifography")) {
 				'geo_zoom' => '2',
 				'geo_width' => '100',
 				'geo_height' => '100',
+				'api_key' => 'Add your key here',
 			);
 			
 			$old_options = get_option('thesography_options');
@@ -206,8 +207,7 @@ if (!class_exists("exifography")) {
 				$geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
 				$geo_pretty_coords = $this->geo_pretty_fracs2dec($latitude) . $lat_ref . ' ' . $this->geo_pretty_fracs2dec($longitude) . $lng_ref;
 				$gmap_url = '//maps.google.com/maps?q=' .$geo_coords. '&ll=' .$geo_coords. '&z=11';
-				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false';
+				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?center='.$geo_coords.'&zoom='.$options['geo_zoom'].'&scale=2&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap&markers=color:red%7Clabel:H%7C'.$geo_coords.'&key='.$options['api_key'];
 				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords.'" width="'.$options['geo_width'].'" height="'.$options['geo_height'].'" style="vertical-align:top;" />';
 
 				if (array_key_exists('geo_link',$options) && array_key_exists('geo_img',$options))
@@ -453,6 +453,7 @@ if (!class_exists("exifography")) {
 			add_settings_field('geo_zoom',__('Map zoom (0 is the widest, 21 is close)', 'exifography'),array($this,'geo_zoom'),'plugin_options','custom_html');
 			add_settings_field('geo_width',__('Map width', 'exifography'),array($this,'geo_width'),'plugin_options','custom_html');
 			add_settings_field('geo_height',__('Map height', 'exifography'),array($this,'geo_height'),'plugin_options','custom_html');
+			add_settings_field('api_key',__('Google API Key', 'exifography'),array($this,'api_key'),'plugin_options','custom_html');
 			
 			wp_enqueue_style( 'exif_admin_style', WP_PLUGIN_URL . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'css/admin.css' );
 			wp_enqueue_script('exif_admin_js',WP_PLUGIN_URL . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) . 'js/admin.js',array('jquery'));
@@ -523,7 +524,10 @@ if (!class_exists("exifography")) {
 			$options = $this->get_options();
 			echo '<input type="text" id="geo_height" name="'.$this->exif_options.'[geo_height]" value="'.$options['geo_height'].'" class="regular-text code" />';
 		}
-		
+		function api_key() {
+			$options = $this->get_options();
+			echo '<input type="text" id="api_key" name="'.$this->exif_options.'[api_key]" value="'.$options['api_key'].'" class="regular-text code" />';
+		}
 		// validate options
 		function options_validate($input) {
 			$output = array();
