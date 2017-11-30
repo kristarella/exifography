@@ -3,7 +3,7 @@
 Plugin Name: Exifography
 Plugin URI: http://kristarella.blog/exifography
 Description: Displays EXIF data for images uploaded with WordPress and enables import of latitude and longitude EXIF to the database upon image upload.
-Version: 1.3
+Version: 1.3.1
 Author URI: http://kristarella.blog
 Author: kristarella
 License: GPL2+
@@ -172,17 +172,21 @@ if (!class_exists("exifography")) {
 		function img_meta($imgID=null) {
 			global $post;
 			if (!$imgID) {
-				$images = get_children(array(
-					'post_parent' => $post->ID,
-					'post_type' => 'attachment',
-					'numberposts' => 1,
-					'post_mime_type' => 'image',
-					'orderby' => 'ID',
-					'order' => 'ASC'
-					));
-				if ($images) {
-					foreach ($images as $image) {
-						$imgID = $image->ID;
+				if (get_post_thumbnail_id($post->ID))
+					$imgID = get_post_thumbnail_id($post->ID);
+				else {
+					$images = get_children(array(
+						'post_parent' => $post->ID,
+						'post_type' => 'attachment',
+						'numberposts' => 1,
+						'post_mime_type' => 'image',
+						'orderby' => 'ID',
+						'order' => 'ASC'
+						));
+					if ($images) {
+						foreach ($images as $image) {
+							$imgID = $image->ID;
+						}
 					}
 				}
 			}
