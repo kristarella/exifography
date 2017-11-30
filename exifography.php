@@ -539,7 +539,7 @@ if (!class_exists("exifography")) {
 				//validate checkboxes
 				if ($key == 'exif_fields') {
 					foreach ($value as $field) {
-						if (array_key_exists($field,$this->fields))
+						if (array_key_exists( $field, $this->fields) )
 							$output['exif_fields'][] = $field;
 					}
 				}
@@ -550,6 +550,16 @@ if (!class_exists("exifography")) {
 				elseif ($key == 'geo_zoom' || $key == 'geo_width' || $key == 'geo_height') {
 					if(preg_match('/^[0-9]*$/i',trim($value)))
 						$output[$key] = $value;
+				}
+				//validate order
+				elseif ($key == 'order') {
+					$order = array();
+					$fields = explode( ',', $value );
+					foreach ($fields as $field) {
+						if (array_key_exists( $field, $this->fields ))
+							$order[] = $field;
+					}
+						$output[$key] = $order;
 				}
 				// everything else
 				else
