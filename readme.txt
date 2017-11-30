@@ -50,6 +50,10 @@ See the above answer.
 
 == Changelog ==
 
+= 1.3 =
+* Added Google Maps API field for high usage
+* Added visual sorting to settings page
+
 = 1.2 =
 * Fixed bug where shortcode with no show att doesn't display
 * changed google maps link to protocol agnostic
