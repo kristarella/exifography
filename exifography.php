@@ -169,6 +169,26 @@ if (!class_exists("exifography")) {
 
 
 		// === DISPLAY EXIF === //
+		function img_meta($imgID=null) {
+			global $post;
+			if (!$imgID) {
+				$images = get_children(array(
+					'post_parent' => $post->ID,
+					'post_type' => 'attachment',
+					'numberposts' => 1,
+					'post_mime_type' => 'image',
+					'orderby' => 'ID',
+					'order' => 'ASC'
+					));
+				if ($images) {
+					foreach ($images as $image) {
+						$imgID = $image->ID;
+					}
+				}
+			}
+
+			return wp_get_attachment_metadata($imgID);
+		}
 		// return geo exif in a nice form
 		function geo_frac2dec($str) {
 			@list( $n, $d ) = explode( '/', $str );
@@ -186,7 +206,8 @@ if (!class_exists("exifography")) {
 					$this->geo_frac2dec($fracs[1]) / 60 +
 					$this->geo_frac2dec($fracs[2]) / 3600;
 		}
-		function display_geo($imgmeta) {
+		function display_geo($imgID=null,$show=false) {
+			$imgmeta = $this->img_meta($imgID);
 			$options = $this->get_options();
 			if (isset($imgmeta['image_meta']['latitude'])) {
 				if ($imgmeta['image_meta']['latitude'])
@@ -204,11 +225,27 @@ if (!class_exists("exifography")) {
 				if ($lng_ref == 'W') { $neg_lng = '-'; } else { $neg_lng = ''; }
 
 				$geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
+
+				if ('dec' == $show)
+					return $geo_coords;
+
 				$geo_pretty_coords = $this->geo_pretty_fracs2dec($latitude) . $lat_ref . ' ' . $this->geo_pretty_fracs2dec($longitude) . $lng_ref;
+
+				if ('coords' == $show)
+					return $geo_pretty_coords;
+
 				$gmap_url = '//maps.google.com/maps?q=' .$geo_coords. '&ll=' .$geo_coords. '&z=11';
+
+				if ('url' == $show)
+					return $gmap_url;
+
 				$geo_key = !empty($options['geo_key']) ? '&key=' . $options['geo_key'] : '';
 				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
 &markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false'.$geo_key;
+
+				if ('map' == $show)
+					return $geo_img_url;
+
 				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords.'" width="'.$options['geo_width'].'" height="'.$options['geo_height'].'" style="vertical-align:top;" />';
 
 				if (array_key_exists('geo_link',$options) && array_key_exists('geo_img',$options))
@@ -287,23 +324,7 @@ if (!class_exists("exifography")) {
 					$options['exif_fields'][] = $value;
 			}
 
-			if (!$imgID) {
-				$images = get_children(array(
-					'post_parent' => $post->ID,
-					'post_type' => 'attachment',
-					'numberposts' => 1,
-					'post_mime_type' => 'image',
-					'orderby' => 'ID',
-					'order' => 'ASC'
-					));
-				if ($images) {
-					foreach ($images as $image) {
-						$imgID = $image->ID;
-					}
-				}
-			}
-
-			$imgmeta = wp_get_attachment_metadata($imgID);
+			$imgmeta = $this->img_meta($imgID);
 			if (!empty($imgmeta['image_meta'])) :
 
 			$output = array();
@@ -344,7 +365,7 @@ if (!class_exists("exifography")) {
 					elseif ($key == 'focal_length' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = $imgmeta['image_meta'][$key] . __('mm','exifography');
 					elseif ($key == 'location')
-						$exif = $this->display_geo($imgmeta);
+						$exif = $this->display_geo();
 					elseif ($key == 'shutter_speed' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = $this->pretty_shutter_speed($imgmeta);
 					else
