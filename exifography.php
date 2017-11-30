@@ -171,7 +171,9 @@ if (!class_exists("exifography")) {
 		// === DISPLAY EXIF === //
 		function img_meta($imgID=null) {
 			global $post;
-			if (!$imgID) {
+			if (!$imgID)
+					$imgID = get_post_thumbnail_id( $post->ID );
+			if (is_null($imgID)) {
 				$images = get_children(array(
 					'post_parent' => $post->ID,
 					'post_type' => 'attachment',
