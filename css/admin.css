@@ -1,10 +1,58 @@
 /*
 	Admin styles for Exifography options page
-	
+
 	Author: kristarella
 	Author URL: http://www.kristarella.com
 */
 
-.exifography table.exif_fields tr {width:200px; float:left;}
-.exifography label {display:block; text-align:right;}
-.exifography th {text-align:right;}
+.exifography .exif_fields tbody {
+  border: solid #ccc;
+  border-width: 1px 0 0 1px;
+}
+
+.exifography .exif_fields tr {
+  width: 200px;
+  float: left;
+  border: solid #ccc;
+  border-width: 0 1px 1px 0;
+}
+
+.exifography label {
+  display: block;
+  text-align: right;
+}
+
+.exifography th {
+  text-align: right;
+}
+
+.exifography .exif_fields tbody {
+  counter-reset: fields;
+}
+
+.exifography .exif_fields th:before {
+  color: lightslategrey;
+  counter-increment: fields;
+  content: counter(fields);
+  margin-right: 1em;
+}
+
+.exifography .exif_fields tr.ui-sortable-handle {
+  cursor: pointer;
+}
+.exifography .exif_fields tr.ui-sortable-helper {
+  border-width: 1px;
+  border-style: dashed;
+}
+/*
+.ui-sortable-placeholder {
+   -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow:         inset 0 0 10px #000000;
+   visibility: visible !important;
+}
+*/
+
+.exifography .form-table a {
+  text-decoration: none;
+}
