@@ -464,7 +464,7 @@ if (!class_exists("exifography")) {
 		// render options sections
 		function defaults() {
 ?>
-<p><?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed. You can override these within an individual post, shortcode, or function.", 'exifography'); ?></p>
+<p><?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed. You can override these within an individual post, shortcode, or function.", 'exifography'); ?> <em><?php _e("Drag and drop to reorder the fields.", 'exifography'); ?></em></p>
 <?php
 		}
 		function auto() {
