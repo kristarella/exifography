@@ -50,6 +50,9 @@ See the above answer.
 
 == Changelog ==
 
+= 1.3.1 =
+* Added featured image as automatic exif source
+
 = 1.3 =
 * Added Google Maps API field for high usage
 * Added visual sorting to settings page
