@@ -307,7 +307,13 @@ if (!class_exists("exifography")) {
 			if (!empty($imgmeta['image_meta'])) :
 
 			$output = array();
-			foreach ($this->fields as $key => $value) {
+			if (!empty($options['order']))
+				$order = $options['order'];
+			else
+				$order = array_keys($this->fields);
+
+			foreach ($order as $key) {
+				$value = $this->fields[$key];
 				if (empty($options['item_label']))
 					$value = $value;
 				else
@@ -438,7 +444,14 @@ if (!class_exists("exifography")) {
 			add_settings_section('auto_display', __('Auto insert into post', 'exifography'), array($this,'auto'), 'plugin_options');
 			add_settings_section('custom_html', __('Custom HTML', 'exifography'), array($this,'html'), 'plugin_options');
 			// exif fields settings inputs
-			foreach ($this->fields as $key => $value) {
+			$options = $this->get_options();
+			if (!empty($options['order']))
+				$order = $options['order'];
+			else
+				$order = array_keys($this->fields);
+
+			foreach ($order as $key) {
+				$value = $this->fields[$key];
 				add_settings_field('exif-field-'.$key, $value, array($this,'default_fields'), 'plugin_options', 'default_display', $key);
 			}
 			// auto insert settings fields
