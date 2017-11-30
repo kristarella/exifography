@@ -3,7 +3,7 @@ Contributors: kristarella
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7439094
 Tags: exif, iptc, photos, photographs, photoblog
 Requires at least: 3.2
-Tested up to: 4.9
+Tested up to: 4.9.1
 Stable tag: 1.3
 
 Exifography displays EXIF data for images and enables import of latitude and longitude EXIF to the database.
@@ -53,6 +53,7 @@ See the above answer.
 = 1.3 =
 * Added Google Maps API field for high usage
 * Added visual sorting to settings page
+* Function to more easily retrieve different forms of geo info
 
 = 1.2 =
 * Fixed bug where shortcode with no show att doesn't display
