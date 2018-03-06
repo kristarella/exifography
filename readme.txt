@@ -50,8 +50,13 @@ See the above answer.
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.3.1a =
 * Added finer EXIF label customisation selectors (ul.exif li label)
+
+= 1.3 =
+* Added Google Maps API field for high usage
+* Added visual sorting to settings page
+* Function to more easily retrieve different forms of geo info
 
 = 1.2 =
 * Fixed bug where shortcode with no show att doesn't display
