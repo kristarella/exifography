@@ -50,12 +50,9 @@ See the above answer.
 
 == Changelog ==
 
-<<<<<<< HEAD
 = 1.3.1a =
-* Added finer EXIF label customisation selectors (ul.exif li label)
+* Added finer EXIF label customisation selectors (ul.exif li label) (acseven)
 
-=======
->>>>>>> 134b6fb3d0364c5fba4e1d0f947b1e40f31d6fdd
 = 1.3 =
 * Added Google Maps API field for high usage
 * Added visual sorting to settings page
