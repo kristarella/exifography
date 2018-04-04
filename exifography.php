@@ -3,7 +3,7 @@
 Plugin Name: Exifography
 Plugin URI: http://kristarella.blog/exifography
 Description: Displays EXIF data for images uploaded with WordPress and enables import of latitude and longitude EXIF to the database upon image upload.
-Version: 1.3
+Version: 1.3.1a
 Author URI: http://kristarella.blog
 Author: kristarella
 License: GPL2+
@@ -58,6 +58,8 @@ if (!class_exists("exifography")) {
 				'before_block' => __('Before EXIF block', 'exifography'),
 				'before_item' => __('Before EXIF item', 'exifography'),
 				'after_item' => __('After EXIF item', 'exifography'),
+				'before_label' => __('Before EXIF label', 'exifography'),
+				'after_label' => __('After EXIF label', 'exifography'),
 				'after_block' => __('After EXIF block', 'exifography'),
 				'sep' => __('Separator for EXIF label', 'exifography'),
 			);
@@ -128,13 +130,15 @@ if (!class_exists("exifography")) {
 			$defaults = array(
 				'before_block' => '<ul id="%s" class="exif">',
 				'before_item' => '<li class="%s">',
-				'after_item' => '</li>',
+				'before_label' => '<label for="%s">',
+				'after_label' => '</label><span>',
+				'after_item' => '</span></li>',
 				'after_block' => '</ul>',
 				'sep' => ': ',
 				'timestamp' => 'j F, Y',
 				'geo_zoom' => '2',
 				'geo_width' => '100',
-				'geo_height' => '100'
+				'geo_height' => '100',
 			);
 
 			$old_options = get_option('thesography_options');
@@ -372,7 +376,13 @@ if (!class_exists("exifography")) {
 						$exif = $imgmeta['image_meta'][$key];
 
 					if ($exif)
-						$output[$key] = sprintf(stripslashes($options['before_item']),$key) . $value . stripslashes($options['sep']) . $exif . stripslashes($options['after_item']);
+						$output[$key] = sprintf(stripslashes($options['before_item']),$key)
+							. sprintf(stripslashes($options['before_label']),$key)
+							. $value
+							. stripslashes($options['sep'])
+							. stripslashes($options['after_label'])
+							. $exif
+							. stripslashes($options['after_item']);
 				}
 			}
 
