@@ -369,7 +369,7 @@ if (!class_exists("exifography")) {
 					elseif ($key == 'focal_length' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = $imgmeta['image_meta'][$key] . __('mm','exifography');
 					elseif ($key == 'location')
-						$exif = $this->display_geo();
+						$exif = $this->display_geo($imgID);
 					elseif ($key == 'shutter_speed' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = $this->pretty_shutter_speed($imgmeta);
 					else
