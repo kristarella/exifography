@@ -228,40 +228,46 @@ if (!class_exists("exifography")) {
 				if ($lat_ref == 'S') { $neg_lat = '-'; } else { $neg_lat = ''; }
 				if ($lng_ref == 'W') { $neg_lng = '-'; } else { $neg_lng = ''; }
 
+				// all the formats we might want
 				$geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
-
-				if ('dec' == $show)
-					return $geo_coords;
-
 				$geo_pretty_coords = $this->geo_pretty_fracs2dec($latitude) . $lat_ref . ' ' . $this->geo_pretty_fracs2dec($longitude) . $lng_ref;
-
-				if ('coords' == $show)
-					return $geo_pretty_coords;
-
-				$gmap_url = '//maps.google.com/maps?q=' .$geo_coords. '&ll=' .$geo_coords. '&z=11';
-
-				if ('url' == $show)
-					return $gmap_url;
-
+				$gmap_url = '//maps.google.com/maps?q=' . $geo_coords . '&ll=' . $geo_coords . '&z=11';
 				$geo_key = !empty($options['geo_key']) ? '&key=' . $options['geo_key'] : '';
 				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
 &markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false'.$geo_key;
-
-				if ('map' == $show)
-					return $geo_img_url;
-
 				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords.'" width="'.$options['geo_width'].'" height="'.$options['geo_height'].'" style="vertical-align:top;" />';
 
-				if (array_key_exists('geo_link',$options) && array_key_exists('geo_img',$options))
-					$show_geo = '<a href="'.$gmap_url.'">'.$geo_img_html.'</a>';
-				elseif (array_key_exists('geo_img',$options) && !array_key_exists('geo_link',$options))
-					$show_geo = $geo_img_html;
-				elseif (array_key_exists('geo_link',$options) && !array_key_exists('geo_img',$options))
-					$show_geo = '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
-				else
-					$show_geo = $geo_pretty_coords;
+				// all the things you can manually output with this function
+				if (false !== $show) {
+					if ('dec' == $show)
+						return $geo_coords;
 
-				return $show_geo;
+					if ('coords' == $show)
+						return $geo_pretty_coords;
+
+					if ('url' == $show)
+						return $gmap_url;
+
+					if ('map' == $show)
+						return $geo_img_url;
+				} else { // the things automatically output in display_exif()
+
+					if (array_key_exists('geo_link',$options) && array_key_exists('geo_img',$options))
+						$show_geo = '<a href="'.$gmap_url.'">'.$geo_img_html.'</a>';
+
+					elseif (array_key_exists('geo_img',$options) && !array_key_exists('geo_link',$options))
+						$show_geo = $geo_img_html;
+
+					elseif (array_key_exists('geo_link',$options) && !array_key_exists('geo_img',$options))
+						$show_geo = '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
+
+					else
+						$show_geo = $geo_pretty_coords;
+
+					return $show_geo;
+				}
+
+				return $show;
 			}
 		}
 		function flash_fired($imgmeta) {
