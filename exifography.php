@@ -280,7 +280,7 @@ if (!class_exists("exifography")) {
 			}
 		}
 		function pretty_shutter_speed($imgmeta) {
-			if (isset($imgmeta['image_meta']['shutter_speed'])) {
+			if (isset($imgmeta['image_meta']['shutter_speed']) && $imgmeta['image_meta']['shutter_speed'] > 0) {
 				if ((1 / $imgmeta['image_meta']['shutter_speed']) > 1) {
 					$speed = "1/";
 					if ((number_format((1 / $imgmeta['image_meta']['shutter_speed']), 1)) == 1.3
