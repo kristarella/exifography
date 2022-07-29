@@ -231,7 +231,7 @@ if (!class_exists("exifography")) {
 				// all the formats we might want
 				$geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
 				$geo_pretty_coords = $this->geo_pretty_fracs2dec($latitude) . $lat_ref . ' ' . $this->geo_pretty_fracs2dec($longitude) . $lng_ref;
-				$gmap_url = '//maps.google.com/maps?q=' . $geo_coords . '&ll=' . $geo_coords . '&z=11';
+				$gmap_url = '//maps.google.com/maps?q=' . $geo_coords . '&z=11';
 				$geo_key = !empty($options['geo_key']) ? '&key=' . $options['geo_key'] : '';
 				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
 &markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false'.$geo_key;
