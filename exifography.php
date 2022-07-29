@@ -42,7 +42,7 @@ if (!class_exists("exifography")) {
 				'credit' => __('Credit', 'exifography'),
 				'camera' => __('Camera', 'exifography'),
 				'caption' => __('Caption', 'exifography'),
-				'created_timestamp' => __('Taken', 'exifography'),
+				'created_timestamp' => __('Date Taken', 'exifography'),
 				'copyright' => __('Copyright', 'exifography'),
 				'exposure_bias' => __('Exposure bias', 'exifography'),
 				'flash' => __('Flash fired', 'exifography'),
@@ -491,8 +491,8 @@ if (!class_exists("exifography")) {
 			foreach ($this->html_options as $key => $value) {
 				add_settings_field($key, $value, array($this,'html_fields'), 'plugin_options', 'custom_html', $key);
 			}
-			add_settings_field('timestamp',__('Timestamp format', 'exifography'),array($this,'timestamp'),'plugin_options','custom_html');
 			add_settings_field('item_label',__('Turn off item label', 'exifography'),array($this,'label'),'plugin_options','custom_html');
+			add_settings_field('timestamp',__('Timestamp format', 'exifography'),array($this,'timestamp'),'plugin_options','custom_html');
 			add_settings_field('geo_link',__('Link GEO EXIF to Google Maps', 'exifography'),array($this,'geo_link'),'plugin_options','custom_html');
 			add_settings_field('geo_img',__('Display map thumbnail instead of location coords', 'exifography'),array($this,'geo_img'),'plugin_options','custom_html');
 			add_settings_field('geo_zoom',__('Map zoom (0 is the widest, 21 is close)', 'exifography'),array($this,'geo_zoom'),'plugin_options','custom_html');

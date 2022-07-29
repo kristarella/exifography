@@ -52,6 +52,7 @@ See the above answer.
 
 = 1.3.2 =
 * make Separator for EXIF label not appear when item label is turned off
+* remove &ll=<ll> from gmap url
 
 = 1.3.1 =
 * Added featured image as automatic exif source
