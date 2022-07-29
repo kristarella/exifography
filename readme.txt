@@ -50,6 +50,9 @@ See the above answer.
 
 == Changelog ==
 
+= 1.3.2 =
+* make Separator for EXIF label not appear when item label is turned off
+
 = 1.3.1 =
 * Added featured image as automatic exif source
 * Refactored `display_geo` so it can be used independently
