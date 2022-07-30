@@ -299,10 +299,16 @@ if (!class_exists("exifography")) {
 			}
 		}
 
-
 		// render exif data in posts
-		public function display_exif($display=null,$imgID=null) {
+		public function display_exif($display=null,$imgID=null) 
+		{
 			global $post;
+			
+			// manual location options
+			$locationKeys = array("dec", "coords", "url", "map");
+			if (in_array($display, $locationKeys))
+				return $this->display_geo($imgID, $display);
+
 			$options = $this->get_options();
 			$post_options = get_post_meta($post->ID, '_use_exif', true);
 			// use specified options
@@ -349,9 +355,12 @@ if (!class_exists("exifography")) {
 					$value = $value . stripslashes($options['sep']);
 				else
 					$value = '';
+
 				if ( !(array_key_exists($key, $imgmeta['image_meta']) || $key == 'location' ) )
 					continue;
-				if (in_array($key,$options['exif_fields']) || $display == 'all') {
+
+				if (in_array($key,$options['exif_fields']) || $display == 'all') 
+				{
 					if ($key == 'aperture' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = '&#402;/'.$imgmeta['image_meta'][$key];
 					elseif ($key == 'created_timestamp' && !$imgmeta['image_meta'][$key] == 0)
@@ -360,7 +369,8 @@ if (!class_exists("exifography")) {
 					 	$exposure_bias_parts = explode("/", $imgmeta['image_meta'][$key]);
 					 	if ($exposure_bias_parts[0] == "0")
 					 		$exif = '';
-					 	else {
+					 	else 
+					 	{
 					 		$float = intval($exposure_bias_parts[0]) / intval($exposure_bias_parts[1]);
 					 		if (is_int($float))
 					 			$exif = sprintf("%+d%s", $float, __('EV','exifography'));
@@ -382,15 +392,16 @@ if (!class_exists("exifography")) {
 						$exif = $imgmeta['image_meta'][$key];
 
 					if ($exif)
-						$output[$key] = sprintf(stripslashes($options['before_item']),$key) . $value . $exif . stripslashes($options['after_item']);
+						$output[$key] = sprintf(stripslashes($options['before_item']),$key)
+						. $value . $exif . stripslashes($options['after_item']);
 				}
 			}
 
 			$output = apply_filters('exifography_display_exif',$output,$post->ID,$imgID);
 			endif;
 			if (!empty($output)) {
-				$output = sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) . implode('',$output) . stripslashes($options['after_block']);
-
+				$output = sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) 
+				    . implode('',$output) . stripslashes($options['after_block']);
 				return $output;
 			}
 		}
@@ -425,7 +436,6 @@ if (!class_exists("exifography")) {
 				$imgID = $imageID;
 			else
 				$imgID = $id;
-
 
 			return $this->display_exif($show,$imgID);
 		}
@@ -634,7 +644,7 @@ if (!class_exists("exifography")) {
 			else
 				$set_exif = '';
 			$set_exif = explode(',', $set_exif);
-			?>
+	?>
 
 			<p><?php _e('If there is a photo attached to this post, the following details may be added to the end of the post.', 'exifography'); ?></p>
 			<ul style="padding:0 0.9em;">
@@ -644,7 +654,7 @@ if (!class_exists("exifography")) {
 			}
 ?>
 			</ul>
-			<?php
+<?php
 		}
 
 		//saves the meta box options as a custom field called _use_exif
