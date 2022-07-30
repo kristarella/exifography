@@ -5,7 +5,7 @@ Plugin URI: http://kristarella.blog/exifography
 Description: Displays EXIF data for images uploaded with WordPress and enables import of latitude and longitude EXIF to the database upon image upload.
 Version: 1.3.2
 Author URI: http://kristarella.blog
-Author: airdrummer
+Author: kristarella
 License: GPL2+
 Text Domain: exifography
 Domain Path: languages

@@ -50,7 +50,7 @@ See the above answer.
 
 == Changelog ==
 
-= 1.3.2 =
+= 1.3.2 = air_drummer@verizon.net
 * make Separator for EXIF label not appear when item label is turned off
 * remove &ll=<ll> from gmap url
 * add manual location options in shortcode
