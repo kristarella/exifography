@@ -131,7 +131,7 @@ if (!class_exists("exifography")) {
 				'after_item' => '</li>',
 				'after_block' => '</ul>',
 				'sep' => ': ',
-				'timestamp' => 'j F, Y',
+				'timestamp' => 'Y-m-d H:i:s',
 				'geo_zoom' => '2',
 				'geo_width' => '100',
 				'geo_height' => '100'
@@ -237,8 +237,8 @@ if (!class_exists("exifography")) {
 &markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false'.$geo_key;
 				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords.'" width="'.$options['geo_width'].'" height="'.$options['geo_height'].'" style="vertical-align:top;" />';
 
-				// all the things you can manually output with this function
-				if (false !== $show) {
+				if (false !== $show) // all the things you can manually output with this function
+				{
 					if ('dec' == $show)
 						return $geo_coords;
 
@@ -250,8 +250,9 @@ if (!class_exists("exifography")) {
 
 					if ('map' == $show)
 						return $geo_img_url;
-				} else { // the things automatically output in display_exif()
-
+				} 
+				else // the things automatically output in display_exif()
+				{
 					if (array_key_exists('geo_link',$options) && array_key_exists('geo_img',$options))
 						$show_geo = '<a href="'.$gmap_url.'">'.$geo_img_html.'</a>';
 
@@ -312,15 +313,27 @@ if (!class_exists("exifography")) {
 			$options = $this->get_options();
 			$post_options = get_post_meta($post->ID, '_use_exif', true);
 			// use specified options
-			if (!(is_null($display) || $display == '')) {
+			if (!(is_null($display) || $display == '')) 
+			{
 				if (isset($options['exif_fields']))
 					$options['exif_fields'] = array();
 				$user_defined = explode(',',$display);
 				foreach ($user_defined as $field)
-					$options['exif_fields'][] = $field;
+				{
+					if ('nohtml' == $field)
+						unset($options['geo_link']);
+					elseif ('nolabels' == $field)
+						$options['no_item_label'] = 'yes';
+					elseif ('labels' == $field)
+						$options['no_item_label'] = NULL;
+					else
+						$options['exif_fields'][] = $field;
+				}
+				if(empty($options['exif_fields']))
+				    $display = 'all';
 			}
-			// or use post options
-			elseif ((is_null($display) || $display == '') && $post_options) {
+			elseif ($post_options) 			// or use post options
+			{
 				if (isset($options['exif_fields']))
 					$options['exif_fields'] = array();
 				$post_options = explode(',',$post_options);
@@ -349,12 +362,13 @@ if (!class_exists("exifography")) {
 			else
 				$order = array_keys($this->fields);
 
-			foreach ($order as $key) {
-				$value = $this->fields[$key];
-				if (empty($options['item_label']))
-					$value = $value . stripslashes($options['sep']);
+			foreach ($order as $key) 
+			{
+				$label = $this->fields[$key];
+				if (empty($options['no_item_label'])) // Turn off item label = yes
+					$label = $label . stripslashes($options['sep']);
 				else
-					$value = '';
+					$label = '';
 
 				if ( !(array_key_exists($key, $imgmeta['image_meta']) || $key == 'location' ) )
 					continue;
@@ -393,7 +407,7 @@ if (!class_exists("exifography")) {
 
 					if ($exif)
 						$output[$key] = sprintf(stripslashes($options['before_item']),$key)
-						. $value . $exif . stripslashes($options['after_item']);
+						. $label . $exif . stripslashes($options['after_item']);
 				}
 			}
 
@@ -402,8 +416,10 @@ if (!class_exists("exifography")) {
 			if (!empty($output)) {
 				$output = sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) 
 				    . implode('',$output) . stripslashes($options['after_block']);
-				return $output;
+				if (! array_key_exists('geo_link',$options))
+					$output = strip_tags($output);
 			}
+			return $output;
 		}
 
 		//render shortcode
@@ -501,7 +517,7 @@ if (!class_exists("exifography")) {
 			foreach ($this->html_options as $key => $value) {
 				add_settings_field($key, $value, array($this,'html_fields'), 'plugin_options', 'custom_html', $key);
 			}
-			add_settings_field('item_label',__('Turn off item label', 'exifography'),array($this,'label'),'plugin_options','custom_html');
+			add_settings_field('no_item_label',__('Turn off item label', 'exifography'),array($this,'label'),'plugin_options','custom_html');
 			add_settings_field('timestamp',__('Timestamp format', 'exifography'),array($this,'timestamp'),'plugin_options','custom_html');
 			add_settings_field('geo_link',__('Link GEO EXIF to Google Maps', 'exifography'),array($this,'geo_link'),'plugin_options','custom_html');
 			add_settings_field('geo_img',__('Display map thumbnail instead of location coords', 'exifography'),array($this,'geo_img'),'plugin_options','custom_html');
@@ -555,8 +571,8 @@ if (!class_exists("exifography")) {
 		}
 		function label() {
 			$options = $this->get_options();
-			$checked = isset($options['item_label']) ? checked( $options['item_label'], true, false) : false;
-			echo '<input id="item_label" type="checkbox" name="'.$this->exif_options.'[item_label]" '.$checked.' />';
+			$checked = isset($options['no_item_label']) ? checked( $options['no_item_label'], true, false) : false;
+			echo '<input id="no_item_label" type="checkbox" name="'.$this->exif_options.'[no_item_label]" '.$checked.' />';
 		}
 		function geo_link() {
 			$options = $this->get_options();
@@ -597,7 +613,7 @@ if (!class_exists("exifography")) {
 							$output['exif_fields'][] = $field;
 					}
 				}
-				elseif ($key == 'auto_insert' || $key == 'item_label' || $key == 'geo_link' || $key == 'geo_img') {
+				elseif ($key == 'auto_insert' || $key == 'no_item_label' || $key == 'geo_link' || $key == 'geo_img') {
 					$output[$key] = 1;
 				}
 				//validate numbers
