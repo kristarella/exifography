@@ -167,7 +167,6 @@ if (!class_exists("exifography")) {
 			return $links;
 		}
 
-
 		// === DISPLAY EXIF === //
 		function img_meta($imgID=null) {
 			global $post;
@@ -193,6 +192,7 @@ if (!class_exists("exifography")) {
 
 			return wp_get_attachment_metadata($imgID);
 		}
+		
 		// return geo exif in a nice form
 		function geo_frac2dec($str) {
 			@list( $n, $d ) = explode( '/', $str );
@@ -200,17 +200,21 @@ if (!class_exists("exifography")) {
 				return $n / $d;
 			return $str;
 		}
+		
 		function geo_pretty_fracs2dec($fracs) {
 			return	$this->geo_frac2dec($fracs[0]) . '&deg; ' .
 					$this->geo_frac2dec($fracs[1]) . '&prime; ' .
 					$this->geo_frac2dec($fracs[2]) . '&Prime; ';
 		}
+		
 		function geo_single_fracs2dec($fracs) {
 			return	$this->geo_frac2dec($fracs[0]) +
 					$this->geo_frac2dec($fracs[1]) / 60 +
 					$this->geo_frac2dec($fracs[2]) / 3600;
 		}
-		function display_geo($imgID=null,$show=false) {
+		
+		function display_geo($imgID=null,$show=false) 
+		{
 			$imgmeta = $this->img_meta($imgID);
 			$options = $this->get_options();
 			if (isset($imgmeta['image_meta']['latitude'])) {
@@ -242,7 +246,7 @@ if (!class_exists("exifography")) {
 					if ('dec' == $show)
 						return $geo_coords;
 
-					if ('coords' == $show)
+					if ('dms' == $show)
 						return $geo_pretty_coords;
 
 					if ('url' == $show)
@@ -271,6 +275,25 @@ if (!class_exists("exifography")) {
 				return $show;
 			}
 		}
+
+		function exposure_bias($imgmeta)
+		{
+		 	$exposure_bias_parts = explode("/", $imgmeta['image_meta'][$key]);
+		 	if ($exposure_bias_parts[0] == "0")
+		 		$exif = '';
+		 	else 
+		 	{
+		 		$float = intval($exposure_bias_parts[0]) / intval($exposure_bias_parts[1]);
+		 		if (is_int($float))
+		 			$exif = sprintf("%+d%s", $float, __('EV','exifography'));
+		 		elseif ($float <= -1 || $float >= 1)
+		 			$exif = sprintf("%+.1f%s", $float, __('EV','exifography'));
+		 		else
+		 			$exif = sprintf("%+d%s%d%s", intval($exposure_bias_parts[0]), "/", intval($exposure_bias_parts[1]), __('EV','exifography'));
+		 	}
+		 	return $exif;
+		}
+							
 		function flash_fired($imgmeta) {
 			if (isset($imgmeta['image_meta']['flash'])) {
 				$value = $imgmeta['image_meta']['flash'];
@@ -280,6 +303,7 @@ if (!class_exists("exifography")) {
 					return __('no','exifography');
 			}
 		}
+		
 		function pretty_shutter_speed($imgmeta) {
 			if (isset($imgmeta['image_meta']['shutter_speed']) && $imgmeta['image_meta']['shutter_speed'] > 0) {
 				if ((1 / $imgmeta['image_meta']['shutter_speed']) > 1) {
@@ -306,14 +330,14 @@ if (!class_exists("exifography")) {
 			global $post;
 			
 			// manual location options
-			$locationKeys = array("dec", "coords", "url", "map");
+			$locationKeys = array("dec", "dms", "url", "map");
 			if (in_array($display, $locationKeys))
 				return $this->display_geo($imgID, $display);
 
 			$options = $this->get_options();
 			$post_options = get_post_meta($post->ID, '_use_exif', true);
-			// use specified options
-			if (!(is_null($display) || $display == '')) 
+			
+			if (! empty($display) ) 	// use specified shortcode options
 			{
 				if (isset($options['exif_fields']))
 					$options['exif_fields'] = array();
@@ -322,6 +346,8 @@ if (!class_exists("exifography")) {
 				{
 					if ('nohtml' == $field)
 						unset($options['geo_link']);
+					elseif ('all' == $field)
+						$options['show_all'] = 'yes';
 					elseif ('nolabels' == $field)
 						$options['no_item_label'] = 'yes';
 					elseif ('labels' == $field)
@@ -330,9 +356,14 @@ if (!class_exists("exifography")) {
 						$options['exif_fields'][] = $field;
 				}
 				if(empty($options['exif_fields']))
-				    $display = 'all';
+					$display = (empty($options['show_all'])
+				    			? ''
+				    			: 'all');
+				else 
+					$options['order'] = $options['exif_fields']; // order as specified
 			}
-			elseif ($post_options) 			// or use post options
+			
+			if (empty($display) && $post_options) 	// use post options if not show_all or not shortcode
 			{
 				if (isset($options['exif_fields']))
 					$options['exif_fields'] = array();
@@ -341,7 +372,7 @@ if (!class_exists("exifography")) {
 					$options['exif_fields'][] = $field;
 			}
 
-			// in case there are thesograhy format options
+			// in case there are thesography format options
 			$old_fields = array(
 				'time' => 'created_timestamp',
 				'copy' => 'copyright',
@@ -377,31 +408,28 @@ if (!class_exists("exifography")) {
 				{
 					if ($key == 'aperture' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = '&#402;/'.$imgmeta['image_meta'][$key];
+						
 					elseif ($key == 'created_timestamp' && !$imgmeta['image_meta'][$key] == 0)
 						$exif = date_i18n($options['timestamp'],$imgmeta['image_meta']['created_timestamp']);
-					elseif ($key == 'exposure_bias' && !$imgmeta['image_meta'][$key] == 0) {
-					 	$exposure_bias_parts = explode("/", $imgmeta['image_meta'][$key]);
-					 	if ($exposure_bias_parts[0] == "0")
-					 		$exif = '';
-					 	else 
-					 	{
-					 		$float = intval($exposure_bias_parts[0]) / intval($exposure_bias_parts[1]);
-					 		if (is_int($float))
-					 			$exif = sprintf("%+d%s", $float, __('EV','exifography'));
-					 		elseif ($float <= -1 || $float >= 1)
-					 			$exif = sprintf("%+.1f%s", $float, __('EV','exifography'));
-					 		else
-					 			$exif = sprintf("%+d%s%d%s", intval($exposure_bias_parts[0]), "/", intval($exposure_bias_parts[1]), __('EV','exifography'));
-					 	}
-					}
+						
+					elseif ($key == 'exposure_bias' 
+							&& !$imgmeta['image_meta'][$key] == 0)
+						$exif = $this-> exposure_bias($imgmeta);
+
 					elseif ($key == 'flash')
 						$exif = $this->flash_fired($imgmeta);
-					elseif ($key == 'focal_length' && !$imgmeta['image_meta'][$key] == 0)
+
+					elseif ($key == 'focal_length'
+							 && !$imgmeta['image_meta'][$key] == 0)
 						$exif = $imgmeta['image_meta'][$key] . __('mm','exifography');
+
 					elseif ($key == 'location')
 						$exif = $this->display_geo($imgID);
-					elseif ($key == 'shutter_speed' && !$imgmeta['image_meta'][$key] == 0)
+
+					elseif ($key == 'shutter_speed'
+						 && !$imgmeta['image_meta'][$key] == 0)
 						$exif = $this->pretty_shutter_speed($imgmeta);
+
 					else
 						$exif = $imgmeta['image_meta'][$key];
 
@@ -534,7 +562,7 @@ if (!class_exists("exifography")) {
 		// render options sections
 		function defaults() {
 ?>
-<p><?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed. You can override these within an individual post, shortcode, or function.", 'exifography'); ?> <em><?php _e("Drag and drop to reorder the fields.", 'exifography'); ?></em></p>
+<p><?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed. You can override these within an individual post, shortcode, or function: [exif id=imgID show='nohtml|labels|nolabels|all|dec|dms|url|map|fieldname...'] <br>If no field names are specified, default fields are output, otherwise specify 'all'<br>Location-only options: dec: decimal degrees; dms: degrees minutes seconds; url: googlemap url; map: googlemap image url", 'exifography'); ?><br><em><?php _e("Drag and drop to reorder the fields.", 'exifography'); ?></em></p>
 <?php
 		}
 		function auto() {
@@ -544,7 +572,7 @@ if (!class_exists("exifography")) {
 		}
 		function html() {
 ?>
-<p><?php _e('This is the HTML used to display your exif data. IDs and classes can be used for styling.', 'exifography'); ?></p>
+<p><?php _e('This is the HTML used to display your exif data. IDs and classes can be used for styling:<br>Before EXIF block: %s is filled with wp-image-.$imgID<br>Before EXIF item: %s is filled with field name<br>html may be supressed in shortcode with show=nohtml', 'exifography'); ?></p>
 <?php
 		}
 

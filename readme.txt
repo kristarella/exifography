@@ -54,8 +54,8 @@ See the above answer.
 * make Separator for EXIF label not appear when item label is turned off
 * remove &ll=<ll> from gmap url
 * add manual location options in shortcode
-* add nohtml,nolabels,labels output options
-* Turn off item label = no_item_label
+* add nohtml,nolabels,labels,all output options
+* change 'Turn off item label' option to no_item_label
 
 = 1.3.1 =
 * Added featured image as automatic exif source
