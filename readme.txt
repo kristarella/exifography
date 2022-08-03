@@ -50,6 +50,9 @@ See the above answer.
 
 == Changelog ==
 
+= 1.3.3 = air_drummer@verizon.net
+* code cleanup
+* add filename option
 = 1.3.2 = air_drummer@verizon.net
 * make Separator for EXIF label not appear when item label is turned off
 * remove &ll=<ll> from gmap url

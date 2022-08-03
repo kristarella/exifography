@@ -3,7 +3,7 @@
 Plugin Name: Exifography
 Plugin URI: http://kristarella.blog/exifography
 Description: Displays EXIF data for images uploaded with WordPress and enables import of latitude and longitude EXIF to the database upon image upload.
-Version: 1.3.2
+Version: 1.3.3
 Author URI: http://kristarella.blog
 Author: kristarella
 License: GPL2+
@@ -37,7 +37,8 @@ if (!class_exists("exifography")) {
 		public function __construct() {
 			load_plugin_textdomain( 'exifography', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 
-			$this->fields = array(
+			// unfortunately there is no way of adding/deleting fields if there is an existing field order
+			$this->fields = array( 
 				'aperture' => __('Aperture', 'exifography'),
 				'credit' => __('Credit', 'exifography'),
 				'camera' => __('Camera', 'exifography'),
@@ -45,6 +46,7 @@ if (!class_exists("exifography")) {
 				'created_timestamp' => __('Date Taken', 'exifography'),
 				'copyright' => __('Copyright', 'exifography'),
 				'exposure_bias' => __('Exposure bias', 'exifography'),
+				'filename' => __('Image filename', 'exifography'),
 				'flash' => __('Flash fired', 'exifography'),
 				'focal_length' => __('Focal length', 'exifography'),
 				'iso' => __('ISO', 'exifography'),
@@ -108,7 +110,6 @@ if (!class_exists("exifography")) {
 					$meta['lens'] = trim( $exif['LensMake'] );
 				if (!empty($exif['LensModel']))
 					$meta['lens'] .= ' '.trim( $exif['LensModel'] );*/
-
 			}
 			array_walk($meta, function(&$value, $index){
 				if (is_string($value))
@@ -137,8 +138,8 @@ if (!class_exists("exifography")) {
 				'geo_height' => '100'
 			);
 
-			$old_options = get_option('thesography_options');
 			$current_options = get_option($this->exif_options);
+			$old_options = get_option('thesography_options');
 			if (!empty($old_options)) {
 				$options = $defaults;
 				foreach ($old_options as $key => $option)
@@ -189,8 +190,9 @@ if (!class_exists("exifography")) {
 					}
 				}
 			}
+			$imgmeta = wp_get_attachment_metadata($imgID);
 
-			return wp_get_attachment_metadata($imgID);
+			return $imgmeta;
 		}
 		
 		// return geo exif in a nice form
@@ -201,10 +203,10 @@ if (!class_exists("exifography")) {
 			return $str;
 		}
 		
-		function geo_pretty_fracs2dec($fracs) {
-			return	$this->geo_frac2dec($fracs[0]) . '&deg; ' .
-					$this->geo_frac2dec($fracs[1]) . '&prime; ' .
-					$this->geo_frac2dec($fracs[2]) . '&Prime; ';
+		function geo_pretty_fracs2dms($fracs) {
+			return	$this->geo_frac2dec($fracs[0]) . '&deg;' .
+					$this->geo_frac2dec($fracs[1]) . '&prime;' .
+					$this->geo_frac2dec($fracs[2]) . '&Prime;';
 		}
 		
 		function geo_single_fracs2dec($fracs) {
@@ -228,18 +230,23 @@ if (!class_exists("exifography")) {
 					$lng_ref = $imgmeta['image_meta']['longitude_ref'];
 
 				$lat = $this->geo_single_fracs2dec($latitude);
+				$neg_lat = ($lat_ref == 'S' ? '-': '');
 				$lng = $this->geo_single_fracs2dec($longitude);
-				if ($lat_ref == 'S') { $neg_lat = '-'; } else { $neg_lat = ''; }
-				if ($lng_ref == 'W') { $neg_lng = '-'; } else { $neg_lng = ''; }
+				$neg_lng = ($lng_ref == 'W' ? '-': '');
 
 				// all the formats we might want
 				$geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
-				$geo_pretty_coords = $this->geo_pretty_fracs2dec($latitude) . $lat_ref . ' ' . $this->geo_pretty_fracs2dec($longitude) . $lng_ref;
+				$geo_pretty_coords = $this->geo_pretty_fracs2dms($latitude) . $lat_ref 
+							 . ' ' . $this->geo_pretty_fracs2dms($longitude) . $lng_ref;
 				$gmap_url = '//maps.google.com/maps?q=' . $geo_coords . '&z=11';
 				$geo_key = !empty($options['geo_key']) ? '&key=' . $options['geo_key'] : '';
-				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom'].'&size='.$options['geo_width'].'x'.$options['geo_height'].'&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C'.$geo_coords.'&sensor=false'.$geo_key;
-				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords.'" width="'.$options['geo_width'].'" height="'.$options['geo_height'].'" style="vertical-align:top;" />';
+				$geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom']
+								.'&size='.$options['geo_width'].'x'.$options['geo_height']
+								.'&maptype=roadmap&markers=color:blue%7Clabel:S%7C'
+								.$geo_coords.'&sensor=false'.$geo_key;
+				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords
+								.'" width="'.$options['geo_width'].'" height="'.$options['geo_height']
+								.'" style="vertical-align:top;" />';
 
 				if (false !== $show) // all the things you can manually output with this function
 				{
@@ -258,27 +265,25 @@ if (!class_exists("exifography")) {
 				else // the things automatically output in display_exif()
 				{
 					if (array_key_exists('geo_link',$options) && array_key_exists('geo_img',$options))
-						$show_geo = '<a href="'.$gmap_url.'">'.$geo_img_html.'</a>';
+						return '<a href="'.$gmap_url.'">'.$geo_img_html.'</a>';
 
 					elseif (array_key_exists('geo_img',$options) && !array_key_exists('geo_link',$options))
-						$show_geo = $geo_img_html;
+						return $geo_img_html;
 
 					elseif (array_key_exists('geo_link',$options) && !array_key_exists('geo_img',$options))
-						$show_geo = '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
+						return '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
 
 					else
-						$show_geo = $geo_pretty_coords;
-
-					return $show_geo;
+						return $geo_pretty_coords;
 				}
 
 				return $show;
 			}
 		}
 
-		function exposure_bias($imgmeta)
+		function exposure_bias($exposure_bias_string)
 		{
-		 	$exposure_bias_parts = explode("/", $imgmeta['image_meta'][$key]);
+		 	$exposure_bias_parts = explode("/", $exposure_bias_string);
 		 	if ($exposure_bias_parts[0] == "0")
 		 		$exif = '';
 		 	else 
@@ -294,34 +299,28 @@ if (!class_exists("exifography")) {
 		 	return $exif;
 		}
 							
-		function flash_fired($imgmeta) {
-			if (isset($imgmeta['image_meta']['flash'])) {
-				$value = $imgmeta['image_meta']['flash'];
-				if ($value & 1)
+		function flash_fired($flash_string) {
+			if (isset($flash_string)) 
+			{
+				if ($flash_string & 1)
 					return __('yes','exifography');
 				else
 					return __('no','exifography');
 			}
 		}
 		
-		function pretty_shutter_speed($imgmeta) {
-			if (isset($imgmeta['image_meta']['shutter_speed']) && $imgmeta['image_meta']['shutter_speed'] > 0) {
-				if ((1 / $imgmeta['image_meta']['shutter_speed']) > 1) {
-					$speed = "1/";
-					if ((number_format((1 / $imgmeta['image_meta']['shutter_speed']), 1)) == 1.3
-					or number_format((1 / $imgmeta['image_meta']['shutter_speed']), 1) == 1.5
-					or number_format((1 / $imgmeta['image_meta']['shutter_speed']), 1) == 1.6
-					or number_format((1 / $imgmeta['image_meta']['shutter_speed']), 1) == 2.5) {
-						$speed .= number_format((1 / $imgmeta['image_meta']['shutter_speed']), 1, '.', '') . "s";
-					}
-					else
-						$speed .= number_format((1 / $imgmeta['image_meta']['shutter_speed']), 0, '.', '') . "s";
+		function pretty_shutter_speed($speed) 
+		{
+			if ( 0 < $speed ) 
+			{
+				if (1 > $speed) 
+				{
+					$speed = "1/" . number_format((1 / $speed), 
+											($speed == 1.3 or $speed == 1.5 or $speed == 1.6 or $speed == 2.5
+												? 1 : 0 ), '.', '');
 				}
-				else
-					$speed = $imgmeta['image_meta']['shutter_speed']."s";
-
-				return $speed;
-			}
+				return $speed . "s";
+			} 
 		}
 
 		// render exif data in posts
@@ -360,7 +359,7 @@ if (!class_exists("exifography")) {
 				    			? ''
 				    			: 'all');
 				else 
-					$options['order'] = $options['exif_fields']; // order as specified
+					$options['order'] = &$options['exif_fields']; // order as specified, by reference so mods below are seen
 			}
 			
 			if (empty($display) && $post_options) 	// use post options if not show_all or not shortcode
@@ -374,73 +373,93 @@ if (!class_exists("exifography")) {
 
 			// in case there are thesography format options
 			$old_fields = array(
+				'date' => 'created_timestamp',
 				'time' => 'created_timestamp',
+				'created' => 'created_timestamp',
+				'timestamp' => 'created_timestamp',
 				'copy' => 'copyright',
 				'focus' => 'focal_length',
 				'shutter' => 'shutter_speed',
 			);
 			foreach ($old_fields as $key=>$value) {
 				if (in_array($key,$options['exif_fields']))
-					$options['exif_fields'][] = $value;
+					$options['exif_fields'][$key] = $value;
 			}
 
 			$imgmeta = $this->img_meta($imgID);
-			if (!empty($imgmeta['image_meta'])) :
-
-			$output = array();
-			if (!empty($options['order']))
-				$order = $options['order'];
-			else
-				$order = array_keys($this->fields);
-
-			foreach ($order as $key) 
+			if (!empty($imgmeta['image_meta']))
 			{
-				$label = $this->fields[$key];
-				if (empty($options['no_item_label'])) // Turn off item label = yes
-					$label = $label . stripslashes($options['sep']);
+				$output = array();
+				if (!empty($options['order']))
+					$order = $options['order'];
 				else
-					$label = '';
+					$order = array_keys($this->fields);
+			// unfortunately there is no way of adding/deleting fields if there is an existing field order
 
-				if ( !(array_key_exists($key, $imgmeta['image_meta']) || $key == 'location' ) )
-					continue;
-
-				if (in_array($key,$options['exif_fields']) || $display == 'all') 
+				foreach ($order as $key) 
 				{
-					if ($key == 'aperture' && !$imgmeta['image_meta'][$key] == 0)
-						$exif = '&#402;/'.$imgmeta['image_meta'][$key];
+					if ( ! ( array_key_exists($key, $imgmeta['image_meta'])
+					        || $key == 'location' || $key == 'filename' ) )
+						continue;
+
+					if (in_array($key,$options['exif_fields']) || $display == 'all') 
+					{
+						$label = $this->fields[$key];
+						if (empty($options['no_item_label'])) // Turn off item label = yes
+							$label = $label . stripslashes($options['sep']);
+						else
+							$label = '';
+	
+						switch ($key)
+						{
+							case 'aperture':
+								if( !$imgmeta['image_meta']['aperture'] == 0)
+									$exif = '&#402;/'.$imgmeta['image_meta']['aperture'];
+								break;
+							
+							case 'created_timestamp':
+								if (!$imgmeta['image_meta'][$key] == 0)
+									$exif = date_i18n($options['timestamp'],$imgmeta['image_meta']['created_timestamp']);
+								break;
+							
+							case 'exposure_bias':
+								if( !$imgmeta['image_meta']['exposure_bias'] == 0)
+									$exif = $this->exposure_bias($imgmeta['image_meta']['exposure_bias']);
+								break;
+							
+							case 'filename':
+								$exif = $imgmeta['file'];
+								break;
+							
+							case 'flash':
+								$exif = $this->flash_fired($imgmeta['image_meta']['flash']);
+								break;
+							
+							case 'focal_length':
+								if(!$imgmeta['image_meta']['focal_length'] == 0)
+									$exif = $imgmeta['image_meta']['focal_length'] . __('mm','exifography');
+								break;
+							
+							case 'location':
+								$exif = $this->display_geo($imgID);
+								break;
 						
-					elseif ($key == 'created_timestamp' && !$imgmeta['image_meta'][$key] == 0)
-						$exif = date_i18n($options['timestamp'],$imgmeta['image_meta']['created_timestamp']);
-						
-					elseif ($key == 'exposure_bias' 
-							&& !$imgmeta['image_meta'][$key] == 0)
-						$exif = $this-> exposure_bias($imgmeta);
-
-					elseif ($key == 'flash')
-						$exif = $this->flash_fired($imgmeta);
-
-					elseif ($key == 'focal_length'
-							 && !$imgmeta['image_meta'][$key] == 0)
-						$exif = $imgmeta['image_meta'][$key] . __('mm','exifography');
-
-					elseif ($key == 'location')
-						$exif = $this->display_geo($imgID);
-
-					elseif ($key == 'shutter_speed'
-						 && !$imgmeta['image_meta'][$key] == 0)
-						$exif = $this->pretty_shutter_speed($imgmeta);
-
-					else
-						$exif = $imgmeta['image_meta'][$key];
-
-					if ($exif)
-						$output[$key] = sprintf(stripslashes($options['before_item']),$key)
-						. $label . $exif . stripslashes($options['after_item']);
+							case 'shutter_speed':
+								if(! $imgmeta['image_meta']['shutter_speed'] == 0)
+									$exif = $this->pretty_shutter_speed($imgmeta['image_meta']['shutter_speed']);
+								break;
+							
+							default:
+								$exif = $imgmeta['image_meta'][$key];
+						}
+						if ($exif)
+							$output[$key] = sprintf(stripslashes($options['before_item']),$key)
+											. $label . $exif . stripslashes($options['after_item']);
+					}
 				}
+	
+				$output = apply_filters('exifography_display_exif',$output,$post->ID,$imgID);
 			}
-
-			$output = apply_filters('exifography_display_exif',$output,$post->ID,$imgID);
-			endif;
 			if (!empty($output)) {
 				$output = sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) 
 				    . implode('',$output) . stripslashes($options['after_block']);
@@ -534,6 +553,7 @@ if (!class_exists("exifography")) {
 				$order = $options['order'];
 			else
 				$order = array_keys($this->fields);
+			// unfortunately there is no way of adding/deleting fields if there is an existing field order
 
 			foreach ($order as $key) {
 				$value = $this->fields[$key];
@@ -694,7 +714,7 @@ if (!class_exists("exifography")) {
 			<ul style="padding:0 0.9em;">
 <?php
 			foreach ($this->fields as $key => $value) {
-				echo '<li><input id="exif-field-'.$key.'" value="'.$key.'" type="checkbox" name="exif_fields[]" '.checked( in_array($key, $set_exif), true, false ).' /> <label for="'.$key.'">'.$value.'</label></li>';
+				echo '<li><input id="exif-field-'.$key.'" value="'.$key.'" type="checkbox" name="exif_fields[]" '.checked( in_array($key, $set_exif), true, false ).' /> <label for="'.$key.'">'.$value.' ('.$key.')</label></li>';
 			}
 ?>
 			</ul>
