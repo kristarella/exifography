@@ -56,3 +56,12 @@
 .exifography .form-table a {
   text-decoration: none;
 }
+
+.exifography  ul.opts
+{
+    list-style: unset;
+}
+.exifography  ul.opts li
+{
+    margin: 0 2em;
+}

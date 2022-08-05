@@ -251,16 +251,21 @@ if (!class_exists("exifography")) {
 
 				// all the formats we might want
 				$locations = array();
-				$locations['dec'] = $geo_coords = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
-				$locations['dms'] = $geo_pretty_coords = $this->geo_pretty_fracs2dms($latitude) . $lat_ref 
+				$locations['dec'] = $geo_coords
+					 = $neg_lat . number_format($lat,6) . ',' . $neg_lng . number_format($lng, 6);
+				$locations['dms'] = $geo_pretty_coords
+					 = $this->geo_pretty_fracs2dms($latitude) . $lat_ref 
 							 . ' ' . $this->geo_pretty_fracs2dms($longitude) . $lng_ref;
-				$locations['url'] = $gmap_url = '//maps.google.com/maps?q=' . $geo_coords . '&z=11';
+				$locations['url'] = $gmap_url
+					= '//maps.google.com/maps?q=' . $geo_coords . '&z=' . $options['geo_zoom'];
 				$geo_key = !empty($options['geo_key']) ? '&key=' . $options['geo_key'] : '';
-				$locations['map'] = $geo_img_url = '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom']
+				$locations['map'] = $geo_img_url 
+					= '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom']
 								.'&size='.$options['geo_width'].'x'.$options['geo_height']
 								.'&maptype=roadmap&markers=color:blue%7Clabel:S%7C'
 								.$geo_coords.'&sensor=false'.$geo_key;
-				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'.$geo_pretty_coords.'" title="'.$geo_pretty_coords
+				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'
+								.$geo_pretty_coords.'" title="'.$geo_pretty_coords
 								.'" width="'.$options['geo_width'].'" height="'.$options['geo_height']
 								.'" style="vertical-align:top;" />';
 
@@ -347,18 +352,25 @@ if (!class_exists("exifography")) {
 				$user_defined = explode(',',$display);
 				foreach ($user_defined as $field)
 				{
-					if ('nohtml' == $field)
-						unset($options['geo_link']);
-					elseif ('all' == $field)
-						$options['show_all'] = 'yes';
-					elseif ('nolabels' == $field)
-						$options['no_item_label'] = 'yes';
-					elseif ('labels' == $field)
-						$options['no_item_label'] = NULL;
-					elseif (array_key_exists($field,$this->locationShortcuts))
+					if (array_key_exists($field,$this->locationShortcuts))
 						return $this->display_geo($imgID, $field);
-					else
-						$options['exif_fields'][] = $field;
+					switch ($field)
+					{
+						case 'nohtml':
+							$options['nohtml'] = 'yes';
+							break;
+						case 'all':
+							$options['show_all'] = 'yes';
+							break;
+						case 'nolabels':
+							$options['no_item_label'] = 'yes';
+							break;
+						case 'labels':
+							unset($options['no_item_label']);
+							break;
+						default:
+							$options['exif_fields'][] = $field;
+					}
 				}
 				if(empty($options['exif_fields']))
 					$display = (empty($options['show_all'])
@@ -448,7 +460,7 @@ if (!class_exists("exifography")) {
 								$exif = $imgmeta['image_meta'][$key];
 						}
 						if ($exif)
-							$output[$key] = sprintf(stripslashes($options['before_item']),$key)
+							$output[$key] = @sprintf(stripslashes($options['before_item']),$key)
 											. $label . $exif . stripslashes($options['after_item']);
 					}
 				}
@@ -456,9 +468,9 @@ if (!class_exists("exifography")) {
 				$output = apply_filters('exifography_display_exif',$output,$post->ID,$imgID);
 			}
 			if (!empty($output)) {
-				$output = sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) 
+				$output = @sprintf(stripslashes($options['before_block']),'wp-image-'.$imgID) 
 				    . implode('',$output) . stripslashes($options['after_block']);
-				if (! array_key_exists('geo_link',$options))
+				if (array_key_exists('nohtml',$options))
 					$output = strip_tags($output);
 			}
 			return $output;
@@ -476,22 +488,22 @@ if (!class_exists("exifography")) {
 				'id' => '',
 			), $atts));
 
-			$images = get_children(array(
-				'post_parent' => $post->ID,
-				'post_type' => 'attachment',
-				'numberposts' => 1,
-				'post_mime_type' => 'image',
-				'orderby' => 'ID',
-				'order' => 'ASC'
-				));
-			if ($images) {
-				foreach ($images as $image) {
-					$imageID = $image->ID;
-				}
-			}
-
 			if ($id == '')
-				$imgID = $imageID;
+			{
+				$imgID = '';
+				$images = get_children(
+							array(
+								'post_parent' => $post->ID,
+								'post_type' => 'attachment',
+								'numberposts' => 1,
+								'post_mime_type' => 'image',
+								'orderby' => 'ID',
+								'order' => 'ASC'
+							));
+				if ($images)
+					foreach ($images as $image)
+						$imgID = $image->ID;
+			}
 			else
 				$imgID = $id;
 
@@ -577,15 +589,17 @@ if (!class_exists("exifography")) {
 		function defaults() {
 ?>
 <p>
-<?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed. You can override these within an individual post, shortcode, or function: <br>[exif id=imgID show='nohtml|labels|nolabels|all|locationShortcuts|fieldname...']<br>If no field names are specified, default fields are output, otherwise specify 'all'", 'exifography'); 
-?>
-<br>Location shortcuts:  
-<?php  array_walk($this->locationShortcuts, function($value, $key) { echo "{$key}: {$value}, "; }); ?>
-<br><em>
+<?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed.<br>You can override these within an individual post, shortcode, or function:", 'exifography');?>
+<ul class=opts>[exif id=imgID show='nohtml|labels|nolabels|all|locationShortcuts|fieldname...']
+<li><?php _e("If no field names are specified, default fields are output, otherwise specify 'all'", 'exifography');?>
+<li><?php _e("Location shortcuts: ", 'exifography');?>
+<ul class=opts><?php  array_walk($this->locationShortcuts, function($value, $key) { echo "<li>{$key}: {$value}"; }); ?>
+</ul></ul><em>
 <?php _e("Drag and drop to reorder the fields (overridden by shortcode order)", 'exifography'); ?>
 </em></p>
 <?php
 		}
+		
 		function auto() {
 ?>
 <p><?php _e("Use this option to automatically insert the EXIF for the first image attached to your post. Only use this when most of your posts will need EXIF, you can override this by deselecting all the post display options when editing a single post.", 'exifography'); ?></p>
@@ -593,7 +607,7 @@ if (!class_exists("exifography")) {
 		}
 		function html() {
 ?>
-<p><?php _e('This is the HTML used to display your exif data. IDs and classes can be used for styling:<br>Before EXIF block: %s is filled with wp-image-.$imgID<br>Before EXIF item: %s is filled with field name<br>html may be supressed in shortcode with show=nohtml', 'exifography'); ?></p>
+<p><?php _e('This is the HTML used to display your exif data. IDs and classes can be used for styling:<ul class=opts><li>Before EXIF block: %s is filled with wp-image-.$imgID<li>Before EXIF item: %s is filled with field name<li>html may be supressed in shortcode with show=nohtml</ul>', 'exifography'); ?></p>
 <?php
 		}
 
@@ -711,7 +725,7 @@ if (!class_exists("exifography")) {
 			$set_exif = explode(',', $set_exif);
 	?>
 
-			<p><?php _e('If there is a photo attached to this post, the following details may be added to the end of the post.', 'exifography'); ?></p>
+			<p><?php _e('If there is a photo attached to this post, the following details will be added to the end of the post if "Automatically display exif" is enabled in exifography options:', 'exifography'); ?></p>
 			<ul style="padding:0 0.9em;">
 <?php
 			foreach ($this->fields as $key => $value) {
