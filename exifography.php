@@ -356,6 +356,9 @@ if (!class_exists("exifography")) {
 						return $this->display_geo($imgID, $field);
 					switch ($field)
 					{
+						case 'debug':
+							$options['debug'] = 'yes';
+							break;
 						case 'nohtml':
 							$options['nohtml'] = 'yes';
 							break;
@@ -416,7 +419,7 @@ if (!class_exists("exifography")) {
 							$label = $label . stripslashes($options['sep']);
 						else
 							$label = '';
-	
+						$exif = NULL;
 						switch ($key)
 						{
 							case 'aperture':
@@ -462,9 +465,11 @@ if (!class_exists("exifography")) {
 						if ($exif)
 							$output[$key] = @sprintf(stripslashes($options['before_item']),$key)
 											. $label . $exif . stripslashes($options['after_item']);
+						elseif(! empty($options['debug']))
+							$output[$key] = " exif:" . (empty($label) ? $key : $label) . " n/a ";
 					}
 				}
-	
+
 				$output = apply_filters('exifography_display_exif',$output,$post->ID,$imgID);
 			}
 			if (!empty($output)) {
@@ -473,6 +478,9 @@ if (!class_exists("exifography")) {
 				if (array_key_exists('nohtml',$options))
 					$output = strip_tags($output);
 			}
+			else
+				$output = ""; // avoid 'array' output
+				
 			return $output;
 		}
 
