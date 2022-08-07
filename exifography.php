@@ -462,11 +462,10 @@ if (!class_exists("exifography")) {
 							default:
 								$exif = $imgmeta['image_meta'][$key];
 						}
-						if ($exif)
+						if ($exif or ! empty($options['debug']))
 							$output[$key] = @sprintf(stripslashes($options['before_item']),$key)
-											. $label . $exif . stripslashes($options['after_item']);
-						elseif(! empty($options['debug']))
-							$output[$key] = " exif:" . (empty($label) ? $key : $label) . " n/a ";
+											. $label . ( ! empty($exif) ? $exif : " n/a ")
+											 . stripslashes($options['after_item']);
 					}
 				}
 
@@ -557,7 +556,8 @@ if (!class_exists("exifography")) {
 		}
 
 		// add the admin settings to the database and page
-		function options_init(){
+		function options_init()
+		{
 			register_setting( $this->exif_option_key, $this->exif_option_key, array($this,'options_validate') );
 			add_settings_section('default_display', __('Default EXIF', 'exifography'), array($this,'defaults'), 'plugin_options');
 			add_settings_section('auto_display', __('Auto insert into post', 'exifography'), array($this,'auto'), 'plugin_options');
@@ -575,6 +575,8 @@ if (!class_exists("exifography")) {
 			}
 			// auto insert settings fields
 			add_settings_field('auto_insert', __('Automatically display exif','exifography'), array($this,'auto_field'), 'plugin_options', 'auto_display');
+			// debug settings fields
+			add_settings_field('debug', __('force display of missing data','exifography'), array($this,'debug_field'), 'plugin_options', 'auto_display');
 			// custom HTML settings fields
 			foreach ($this->html_options as $key => $value) {
 				add_settings_field($key, $value, array($this,'html_fields'), 'plugin_options', 'custom_html', $key);
@@ -598,8 +600,9 @@ if (!class_exists("exifography")) {
 ?>
 <p>
 <?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed.<br>You can override these within an individual post, shortcode, or function:", 'exifography');?>
-<ul class=opts>[exif id=imgID show='nohtml|labels|nolabels|all|locationShortcuts|fieldname...']
+<ul class=opts>[exif id=imgID show='debug|nohtml|labels|nolabels|all|locationShortcuts|fieldname...']
 <li><?php _e("If no field names are specified, default fields are output, otherwise specify 'all'", 'exifography');?>
+<li><?php _e("to force display of missing data, specify 'debug'", 'exifography');?>
 <li><?php _e("Location shortcuts: ", 'exifography');?>
 <ul class=opts><?php  array_walk($this->locationShortcuts, function($value, $key) { echo "<li>{$key}: {$value}"; }); ?>
 </ul></ul><em>
@@ -631,6 +634,11 @@ if (!class_exists("exifography")) {
 			$options = $this->get_options();
 			$checked = isset($options['auto_insert']) ? checked( $options['auto_insert'], true, false) : false;
 			echo '<input id="auto_insert" type="checkbox" name="'.$this->exif_option_key.'[auto_insert]" '.$checked.' />';
+		}
+		function debug_field() {
+			$options = $this->get_options();
+			$checked = isset($options['debug']) ? checked( $options['debug'], true, false) : false;
+			echo '<input id="debug" type="checkbox" name="'.$this->exif_option_key.'[debug]" '.$checked.' />';
 		}
 		function html_fields($key) {
 			$options = $this->get_options();
@@ -676,6 +684,7 @@ if (!class_exists("exifography")) {
 		// validate options
 		function options_validate($input) {
 			$output = array();
+			$checkboxes = array('auto_insert','debug','no_item_label','geo_link','geo_img');
 			foreach ($input as $key => $value) {
 				//validate checkboxes
 				if ($key == 'exif_fields') {
@@ -684,7 +693,8 @@ if (!class_exists("exifography")) {
 							$output['exif_fields'][] = $field;
 					}
 				}
-				elseif ($key == 'auto_insert' || $key == 'no_item_label' || $key == 'geo_link' || $key == 'geo_img') {
+				elseif (in_array($key, $checkboxes)) 
+				{
 					$output[$key] = 1;
 				}
 				//validate numbers
