@@ -75,9 +75,9 @@ if (!class_exists("exifography")) {
 			);
 			$this->html_options = array(
 				'before_block' => __('Before EXIF block', 'exifography'),
+				'after_block' => __('After EXIF block', 'exifography'),
 				'before_item' => __('Before EXIF item', 'exifography'),
 				'after_item' => __('After EXIF item', 'exifography'),
-				'after_block' => __('After EXIF block', 'exifography'),
 				'sep' => __('Separator for EXIF label', 'exifography'),
 			);
 
@@ -145,9 +145,9 @@ if (!class_exists("exifography")) {
 		function activate() {
 			$defaults = array(
 				'before_block' => '<div class="exif"><ul id="%s" class="exif">',
+				'after_block' => '</ul></div>',
 				'before_item' => '<li class="%s">',
 				'after_item' => '</li>',
-				'after_block' => '</ul></div>',
 				'sep' => ': ',
 				'timestamp' => 'Y-m-d H:i:s',
 				'geo_zoom' => '11',
@@ -414,12 +414,14 @@ if (!class_exists("exifography")) {
 
 					if (in_array($key,$options['exif_fields']) || $display == 'all') 
 					{
+						$exif = NULL;
 						$label = $this->fields[$key];
-						if (empty($options['no_item_label'])) // Turn off item label = yes
+						if (empty($options['no_item_label'])  // Turn off item label = yes
+						    or ! empty($options['debug']))
 							$label = $label . stripslashes($options['sep']);
 						else
 							$label = '';
-						$exif = NULL;
+
 						switch ($key)
 						{
 							case 'aperture':
@@ -697,7 +699,7 @@ if (!class_exists("exifography")) {
 					$output[$key] = 1;
 				}
 				//validate numbers
-				elseif (in_array($key, array('geo_zoom','geo_width','geo_height')) 
+				elseif (in_array($key, array('geo_zoom','geo_width','geo_height')))
 				{
 					if(preg_match('/^[0-9]*$/i',trim($value)))
 						$output[$key] = $value;
