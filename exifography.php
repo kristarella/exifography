@@ -144,10 +144,10 @@ if (!class_exists("exifography")) {
 
 		function activate() {
 			$defaults = array(
-				'before_block' => '<ul id="%s" class="exif">',
+				'before_block' => '<div class="exif"><ul id="%s" class="exif">',
 				'before_item' => '<li class="%s">',
 				'after_item' => '</li>',
-				'after_block' => '</ul>',
+				'after_block' => '</ul></div>',
 				'sep' => ': ',
 				'timestamp' => 'Y-m-d H:i:s',
 				'geo_zoom' => '11',
@@ -558,7 +558,7 @@ if (!class_exists("exifography")) {
 		// add the admin settings to the database and page
 		function options_init()
 		{
-			register_setting( $this->exif_option_key, $this->exif_option_key, array($this,'options_validate') );
+			register_setting( $this->exif_option_key, $this->exif_option_key, array("sanitize_callback" => array($this,'options_validate')) );
 			add_settings_section('default_display', __('Default EXIF', 'exifography'), array($this,'defaults'), 'plugin_options');
 			add_settings_section('auto_display', __('Auto insert into post', 'exifography'), array($this,'auto'), 'plugin_options');
 			add_settings_section('custom_html', __('Custom HTML', 'exifography'), array($this,'html'), 'plugin_options');
@@ -684,7 +684,6 @@ if (!class_exists("exifography")) {
 		// validate options
 		function options_validate($input) {
 			$output = array();
-			$checkboxes = array('auto_insert','debug','no_item_label','geo_link','geo_img');
 			foreach ($input as $key => $value) {
 				//validate checkboxes
 				if ($key == 'exif_fields') {
@@ -693,12 +692,13 @@ if (!class_exists("exifography")) {
 							$output['exif_fields'][] = $field;
 					}
 				}
-				elseif (in_array($key, $checkboxes)) 
+				elseif (in_array($key, array('auto_insert','debug','no_item_label','geo_link','geo_img'))) 
 				{
 					$output[$key] = 1;
 				}
 				//validate numbers
-				elseif ($key == 'geo_zoom' || $key == 'geo_width' || $key == 'geo_height') {
+				elseif (in_array($key, array('geo_zoom','geo_width','geo_height')) 
+				{
 					if(preg_match('/^[0-9]*$/i',trim($value)))
 						$output[$key] = $value;
 				}
@@ -712,7 +712,7 @@ if (!class_exists("exifography")) {
 					}
 					$output[$key] = $order;
 				}
-				// everything else
+				// everything else mysql_real_escape_string? _real_escape?
 				else
 					$output[$key] = addslashes($value);
 			}
