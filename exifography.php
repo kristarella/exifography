@@ -39,7 +39,7 @@ if (!class_exists("exifography")) {
 				'dec' => 'decimal degrees',
 				'dms' => 'degrees minutes seconds',
 				'url' => 'googlemap url',
-				'map' => 'googlemap image url'
+				'map' => 'googlemap embedded'
 			);
 		public $old_fields = // aliases/thesography names
 			array(
@@ -256,18 +256,14 @@ if (!class_exists("exifography")) {
 				$locations['dms'] = $geo_pretty_coords
 					 = $this->geo_pretty_fracs2dms($latitude) . $lat_ref 
 							 . ' ' . $this->geo_pretty_fracs2dms($longitude) . $lng_ref;
-				$locations['url'] = $gmap_url
-					= '//maps.google.com/maps?q=' . $geo_coords . '&z=' . $options['geo_zoom'];
-				$geo_key = !empty($options['geo_key']) ? '&key=' . $options['geo_key'] : '';
-				$locations['map'] = $geo_img_url 
-					= '//maps.googleapis.com/maps/api/staticmap?zoom='.$options['geo_zoom']
-								.'&size='.$options['geo_width'].'x'.$options['geo_height']
-								.'&maptype=roadmap&markers=color:blue%7Clabel:S%7C'
-								.$geo_coords.'&sensor=false'.$geo_key;
-				$geo_img_html = '<img src="'.$geo_img_url.'" alt="'
-								.$geo_pretty_coords.'" title="'.$geo_pretty_coords
-								.'" width="'.$options['geo_width'].'" height="'.$options['geo_height']
-								.'" style="vertical-align:top;" />';
+
+				$gmap_url = '//maps.google.com/maps?q=' . $geo_coords;
+				$locations['url'] = $gmap_url . '&z=' . $options['geo_zoom'];
+
+				$locations['map'] = $geo_embedded = '<iframe width="'
+								. $options['geo_width'] .'" height="'.$options['geo_height']
+								. " frameborder='0' scrolling='no' marginheight='0' marginwidth='0'"
+								. ' src="' . $gmap_url . '&amp;output=embed"></iframe>';
 
 				if (false !== $show) // all the things you can manually output with this function
 				{
@@ -278,17 +274,19 @@ if (!class_exists("exifography")) {
 				} 
 				else // the things automatically output in display_exif()
 				{
-					if (array_key_exists('geo_link',$options) && array_key_exists('geo_img',$options))
-						return '<a href="'.$gmap_url.'">'.$geo_img_html.'</a>';
-
-					elseif (array_key_exists('geo_img',$options) && !array_key_exists('geo_link',$options))
-						return $geo_img_html;
-
-					elseif (array_key_exists('geo_link',$options) && !array_key_exists('geo_img',$options))
+					if (array_key_exists('geo_link',$options)
+					 && !array_key_exists('geo_img',$options))
 						return '<a href="'.$gmap_url.'">'.$geo_pretty_coords.'</a>';
 
-					else
-						return $geo_pretty_coords;
+					if (array_key_exists('geo_link',$options)
+					 && array_key_exists('geo_img',$options))
+						return '<a href="'.$gmap_url.'">'.$geo_coords.'</a> ' . $geo_embedded;
+
+					if (array_key_exists('geo_img',$options)
+					 && !array_key_exists('geo_link',$options))
+						return $geo_embedded;
+
+					return $geo_pretty_coords;
 				}
 
 				return $show;
@@ -586,7 +584,7 @@ if (!class_exists("exifography")) {
 			add_settings_field('no_item_label',__('Turn off item label', 'exifography'),array($this,'label'),'plugin_options','custom_html');
 			add_settings_field('timestamp',__('Timestamp format', 'exifography'),array($this,'timestamp'),'plugin_options','custom_html');
 			add_settings_field('geo_link',__('Link GEO EXIF to Google Maps', 'exifography'),array($this,'geo_link'),'plugin_options','custom_html');
-			add_settings_field('geo_img',__('Display map thumbnail instead of location coords', 'exifography'),array($this,'geo_img'),'plugin_options','custom_html');
+			add_settings_field('geo_img',__('Display embedded google map', 'exifography'),array($this,'geo_img'),'plugin_options','custom_html');
 			add_settings_field('geo_zoom',__('Map zoom (0 is the widest, 21 is close)', 'exifography'),array($this,'geo_zoom'),'plugin_options','custom_html');
 			add_settings_field('geo_width',__('Map width', 'exifography'),array($this,'geo_width'),'plugin_options','custom_html');
 			add_settings_field('geo_height',__('Map height', 'exifography'),array($this,'geo_height'),'plugin_options','custom_html');

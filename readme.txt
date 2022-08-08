@@ -59,6 +59,7 @@ See the above answer.
 * add manual location options in shortcode
 * add nohtml,nolabels,labels,all output options
 * change 'Turn off item label' option to no_item_label
+* replace map image with embedded
 
 = 1.3.1 =
 * Added featured image as automatic exif source
