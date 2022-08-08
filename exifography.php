@@ -615,7 +615,7 @@ if (!class_exists("exifography")) {
 		
 		function auto() {
 ?>
-<p><?php _e("Use this option to automatically insert the EXIF for the first image attached to your post. Only use this when most of your posts will need EXIF, you can override this by deselecting all the post display options when editing a single post.", 'exifography'); ?></p>
+<p><?php _e("Use this option to automatically insert the EXIF for the first image attached to your post. Only use this when most of your posts will need EXIF, you can override this by selecting/deselecting the 'Add EXIF to post' display options when creating/editing a single post.", 'exifography'); ?></p>
 <?php
 		}
 		function html() {
@@ -745,7 +745,7 @@ if (!class_exists("exifography")) {
 			$set_exif = explode(',', $set_exif);
 	?>
 
-			<p><?php _e('If there is a photo attached to this post, the following details will be added to the end of the post if "Automatically display exif" is enabled in exifography options:', 'exifography'); ?></p>
+			<p><?php _e('If "Automatically display exif" is enabled in exifography options, the following fields of the first image, if any, will be added to the end of the post:', 'exifography'); ?></p>
 			<ul style="padding:0 0.9em;">
 <?php
 			foreach ($this->fields as $key => $value) {
