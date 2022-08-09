@@ -600,8 +600,7 @@ if (!class_exists("exifography")) {
 ?>
 <p>
 <?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed.", 'exifography');?>
-<details><summary>
-<?php _e("You can override these within an individual post, shortcode, or function:", 'exifography');?></summary>[exif id=imgID show='debug|nohtml|labels|nolabels|all|locationShortcuts|fieldname...']<ul class=opts>
+<details><summary><?php _e("You can override these within an individual post, shortcode, or function:", 'exifography');?></summary><br>[exif id=imgID show='debug|nohtml|labels|nolabels|all|locationShortcuts|fieldname...']<ul class=opts>
 <li><?php _e("If no field names are specified, default fields are output, otherwise specify 'all'", 'exifography');?>
 <li><?php _e("to force display of missing data, specify 'debug'", 'exifography');?>
 <li><details><summary><?php _e("Location shortcuts: ", 'exifography');?></summary>
@@ -612,7 +611,7 @@ if (!class_exists("exifography")) {
 "<li>{$key}: {$value}"; }); ?>
 </ul></details>
 </ul></details>
-<em><?php _e("Drag and drop to reorder the fields (overridden by shortcode order)", 'exifography'); ?></em></p>
+<br><em><?php _e("Drag and drop to reorder the fields (overridden by shortcode order)", 'exifography'); ?></em></p>
 <?php
 		}
 		
@@ -623,7 +622,7 @@ if (!class_exists("exifography")) {
 		}
 		function html() {
 ?>
-<p><?php _e('This is the HTML used to display your exif data. IDs and classes can be used for styling:<ul class=opts><li>Before EXIF block: %s is filled with wp-image-.$imgID<li>Before EXIF item: %s is filled with field name<li>html may be supressed in shortcode with show=nohtml</ul>', 'exifography'); ?></p>
+<p><?php _e('<details><summary>This is the HTML used to display your exif data. IDs and classes can be used for styling:</summary><ul class=opts><li>Before EXIF block: %s is filled with wp-image-.$imgID<li>Before EXIF item: %s is filled with field name<li>html may be supressed in shortcode with show=nohtml</ul></details>', 'exifography'); ?></p>
 <?php
 		}
 
