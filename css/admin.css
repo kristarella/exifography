@@ -65,3 +65,7 @@
 {
     margin: 0 2em;
 }
+details summary 
+{ 
+    cursor: pointer;
+}

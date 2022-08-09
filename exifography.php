@@ -599,15 +599,20 @@ if (!class_exists("exifography")) {
 		function defaults() {
 ?>
 <p>
-<?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed.<br>You can override these within an individual post, shortcode, or function:", 'exifography');?>
-<ul class=opts>[exif id=imgID show='debug|nohtml|labels|nolabels|all|locationShortcuts|fieldname...']
+<?php _e("Set these to create default display options. In the absence of any other settings, these will be used when EXIF is displayed.", 'exifography');?>
+<details><summary>
+<?php _e("You can override these within an individual post, shortcode, or function:", 'exifography');?></summary>[exif id=imgID show='debug|nohtml|labels|nolabels|all|locationShortcuts|fieldname...']<ul class=opts>
 <li><?php _e("If no field names are specified, default fields are output, otherwise specify 'all'", 'exifography');?>
 <li><?php _e("to force display of missing data, specify 'debug'", 'exifography');?>
-<li><?php _e("Location shortcuts: ", 'exifography');?>
-<ul class=opts><?php  array_walk($this->locationShortcuts, function($value, $key) { echo "<li>{$key}: {$value}"; }); ?>
-</ul></ul><em>
-<?php _e("Drag and drop to reorder the fields (overridden by shortcode order)", 'exifography'); ?>
-</em></p>
+<li><details><summary><?php _e("Location shortcuts: ", 'exifography');?></summary>
+<ul class=opts><?php  array_walk($this->locationShortcuts, function($value, $key) { echo 
+"<li>{$key}: {$value}"; }); ?></details>
+<li><details><summary><?php _e("Legacy fields/aliases: ", 'exifography');?></summary>
+<ul class=opts><?php  array_walk($this->old_fields, function($value, $key) { echo
+"<li>{$key}: {$value}"; }); ?>
+</ul></details>
+</ul></details>
+<em><?php _e("Drag and drop to reorder the fields (overridden by shortcode order)", 'exifography'); ?></em></p>
 <?php
 		}
 		
