@@ -262,7 +262,7 @@ if (!class_exists("exifography")) {
 
 				$locations['map'] = $geo_embedded = '<iframe width="'
 								. $options['geo_width'] .'" height="'.$options['geo_height']
-								. " frameborder='0' scrolling='no' marginheight='0' marginwidth='0'"
+								. "\" frameborder='0' scrolling='no' marginheight='0' marginwidth='0'"
 								. ' src="' . $gmap_url . '&amp;output=embed"></iframe>';
 
 				if (false !== $show) // all the things you can manually output with this function
