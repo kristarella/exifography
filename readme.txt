@@ -50,6 +50,9 @@ See the above answer.
 
 == Changelog ==
 
+= 1.3.3 = air_drummer@verizon.net
+=	default to image url if show=url & no location
+
 = 1.3.2 = air_drummer@verizon.net
 * code cleanup
 * add filename option
