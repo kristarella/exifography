@@ -291,6 +291,7 @@ if (!class_exists("exifography")) {
 
 				return $show;
 			}
+			return wp_get_attachment_image_url( $imgID, 'full');
 		}
 
 		function exposure_bias($exposure_bias_string)
